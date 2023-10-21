@@ -13,6 +13,9 @@ deploy: ${APPNAME}
 start stop:
 	${CATALINA} $@
 
+tail:
+	tail -f ${CATALINA_HOME}/logs/catalina.out
+
 clean: stop
 	mvn clean
 	@rm -rf ${CATALINA_HOME}/webapps/xplanner
