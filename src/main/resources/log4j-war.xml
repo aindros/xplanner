@@ -35,14 +35,14 @@
   <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
     <param name="MaxFileSize" value="1Mb"/>
     <param name="MaxBackupIndex" value="3"/>
-    <param name="file" value="${xplanner-plus.root}/xplanner-plus.log"/>
+    <param name="file" value="${xplanner-plus.root}/xplanner.log"/>
     <layout class="org.apache.log4j.PatternLayout">
       <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n\r\n\r"/>
     </layout>
   </appender>
 
   <appender name="ACTIVITY_FILE" class="org.apache.log4j.RollingFileAppender" >
-    <param name="File" value="${xplanner-plus.root}/xplanner-plus-activity.log" />
+    <param name="File" value="${xplanner-plus.root}/xplanner-activity.log" />
     <param name="Append" value="true" />
     <param name="MaxFileSize" value="5MB"/>
     <param name="MaxBackupIndex" value="50"/>
