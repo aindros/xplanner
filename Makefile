@@ -6,3 +6,7 @@ all: ${APPNAME}
 
 ${APPNAME}:
 	mvn clean package -DskipTests=true
+
+deploy: ${APPNAME}
+	cp ${APPNAME} ${CATALINA_HOME}/webapps
+
