@@ -10,3 +10,5 @@ ${APPNAME}:
 deploy: ${APPNAME}
 	cp ${APPNAME} ${CATALINA_HOME}/webapps
 
+start stop:
+	${CATALINA} $@
