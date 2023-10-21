@@ -1,6 +1,7 @@
 CATALINA_HOME = tomcat9
 CATALINA      = ${CATALINA_HOME}/bin/catalina.sh
 APPNAME       = target/xplanner.war
+JPDA_OPTS     = -agentlib:jdwp=transport=dt_socket,address=5005,server=y,suspend=y
 
 all: ${APPNAME}
 
@@ -9,6 +10,9 @@ ${APPNAME}:
 
 deploy: ${APPNAME}
 	cp ${APPNAME} ${CATALINA_HOME}/webapps
+
+debug:
+	JPDA_OPTS=${JPDA_OPTS} ${CATALINA} jpda start
 
 start stop:
 	${CATALINA} $@
