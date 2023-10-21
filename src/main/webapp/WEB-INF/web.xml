@@ -130,6 +130,7 @@
 	<filter-mapping>
 		<filter-name>ActivityLogFilter</filter-name>
 		<url-pattern>/do/*</url-pattern>
+		<url-pattern>/view/*</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>
@@ -160,6 +161,7 @@
 	<filter-mapping>
 		<filter-name>WebSecurityFilter</filter-name>
 		<url-pattern>/do/*</url-pattern>
+		<url-pattern>/view/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>WebSecurityFilter</filter-name>
@@ -201,6 +203,13 @@
 	<listener>
 		<listener-class>net.sf.xplanner.context.ContextLoaderListener</listener-class>
 	</listener>
+
+	<!-- Servlet configurations -->
+	<servlet>
+		<servlet-name>mvc-dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 
 	<servlet>
 		<servlet-name>AxisServlet</servlet-name>
@@ -269,6 +278,12 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>mvc-dispatcher</servlet-name>
+		<url-pattern>/view/*</url-pattern>
+	</servlet-mapping>
+
 	<!-- <servlet> <servlet-name>WSServlet</servlet-name> <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class> 
 		<load-on-startup>1</load-on-startup> </servlet> <servlet-mapping> <servlet-name>WSServlet</servlet-name> 
 		<url-pattern>/service/*</url-pattern> </servlet-mapping> -->
