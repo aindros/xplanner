@@ -1,5 +1,6 @@
 <security>
     <security-bypass>
+        <url-pattern>/view/login</url-pattern>
         <url-pattern>/do/login</url-pattern>
         <url-pattern>/do/notAuthorized</url-pattern>
         <url-pattern>/do/invalidateHibernateCache</url-pattern>
