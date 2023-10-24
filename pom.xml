@@ -18,6 +18,7 @@
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
 		<spring.version>3.0.5.RELEASE</spring.version>
+		<thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
   </properties>
 
   <dependencies>
@@ -38,6 +39,19 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- Thymeleaf integrtion -->
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf</artifactId>
+			<version>${thymeleaf.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring3</artifactId>
+			<version>${thymeleaf.version}</version>
 		</dependency>
 
 <!--    <dependency>-->
