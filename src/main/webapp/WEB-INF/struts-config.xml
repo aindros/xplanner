@@ -163,7 +163,7 @@
 
 		<action path="/login" parameter="security/login" name="login/authenticate">
 			<forward name="notAuthenticated" path="/WEB-INF/jsp/security/login.jsp" />
-			<forward name="authenticated" path="/do/view/projects" redirect="true" />
+			<forward name="authenticated" path="/view/projects" redirect="true" />
 		</action>
 
 		<action path="/notAuthorized" parameter="security/notAuthorized" />

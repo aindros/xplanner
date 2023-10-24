@@ -8,11 +8,11 @@
 <bean:size id="projectCount" name="projects"/>
 
 <logic:equal name="projectCount" value="0" >
-    <logic:redirect page="/do/view/projects"/>
+    <logic:redirect page="/view/projects"/>
 </logic:equal>
 
 <logic:greaterThan name="projectCount" value="1" >
-    <logic:redirect page="/do/view/projects"/>
+    <logic:redirect page="/view/projects"/>
 </logic:greaterThan>
 
 <logic:equal name="projectCount" value="1" >
@@ -23,7 +23,7 @@
         }
     %>
     <logic:notPresent name="iteration">
-        <logic:redirect page="/do/view/projects"/>
+        <logic:redirect page="/view/projects"/>
     </logic:notPresent>
     <logic:present name="iteration">
         <logic:redirect page='<%= \"/do/view/iteration?oid=\"+iteration.getId() %>'/>
