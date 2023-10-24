@@ -1,4 +1,3 @@
-
 <%@ page contentType = "text/html;charset=UTF-8"%>
 <%@ page import="org.apache.struts.Globals,
                  org.apache.struts.action.ActionMessages"%>
