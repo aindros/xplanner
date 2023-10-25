@@ -43,47 +43,20 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
-@RequestMapping("/login")
-public class LoginController {
+@RequestMapping("/logout")
+public class LogoutController {
 	private final Logger log = Logger.getLogger(getClass());
 
 	private @Autowired AuthenticationService authenticationService;
-	private @Autowired MessageSource messageSource;
 
 	@RequestMapping(method = GET)
-	public String doViewLogin(ModelMap model) {
-		model.addAttribute("user", new Person());
-
-		return ThymeLeafTemplate.LOGIN.pageName;
-	}
-
-	@RequestMapping(method = POST)
-	public String doPostLogin(@ModelAttribute("user") Person user,
-	                          Model model,
-	                          HttpServletRequest servletRequest,
-	                          HttpServletResponse servletResponse,
-	                          Locale locale) {
+	public String doViewLogout(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
 		try {
-			authenticationService.authenticate(user, servletRequest, servletResponse);
+			authenticationService.logout(servletRequest, servletResponse);
 		} catch (AuthenticationException ex) {
-			/* Using message since text will be formatted slightly differently than the normal "error". */
-			log.warn(ex.getMessage() + ": " + ex.getCause());
-
-			Collection<String> errors = new ArrayList<>();
-			errors.add(messageSource.getMessage("login.failed", null, "login.failed", locale));
-
-			Map<?, ?> errorMap = ex.getErrorsByModule();
-			for (Object key : errorMap.keySet()) {
-				String moduleName = (String) key;
-				String message = (String) errorMap.get(moduleName);
-				errors.add(moduleName + " &mdash; " + messageSource.getMessage(message, new Object[] { user.getUserId() }, message, locale));
-			}
-
-			model.addAttribute("errorMessages", errors);
-
-			return ThymeLeafTemplate.LOGIN.pageName;
+			log.error("Fail to logout", ex);
 		}
 
-		return "redirect:/view/projects";
+		return ThymeLeafTemplate.LOGIN.redirectUrl;
 	}
 }

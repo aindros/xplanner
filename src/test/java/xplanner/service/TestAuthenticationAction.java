@@ -1,8 +1,9 @@
-package com.technoetic.xplanner.actions;
+package xplanner.service;
 
 import java.util.Iterator;
 import java.util.Properties;
 
+import com.technoetic.xplanner.actions.AuthenticationAction;
 import junit.extensions.FieldAccessor;
 import junit.framework.TestCase;
 

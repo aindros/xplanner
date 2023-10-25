@@ -7,8 +7,6 @@
 	
 	<bean name="/systemInfo" class="com.technoetic.xplanner.actions.SystemInfoAction" />
 
-	<bean name="/login" class="com.technoetic.xplanner.actions.AuthenticationAction" />
-
 	<bean name="/notAuthorized" class="com.technoetic.xplanner.actions.DispatchForward">
 		<property name="authorizationRequired" value="false" />
 	</bean>

@@ -63,13 +63,6 @@
 			type="org.apache.struts.action.DynaActionForm" />
 		<form-bean name="view/file" dynamic="true"
 			type="com.technoetic.xplanner.forms.FileManagerForm" />
-		<form-bean name="login/authenticate" dynamic="true"
-			type="org.apache.struts.action.DynaActionForm">
-			<form-property name="userId" type="java.lang.String" />
-			<form-property name="password" type="java.lang.String" />
-			<form-property name="action" type="java.lang.String" />
-			<form-property name="loginModuleNames" type="java.util.List" />
-		</form-bean>
 		<form-bean name="edit/roles"
 			type="com.technoetic.xplanner.forms.RoleEditorForm" />
 	</form-beans>
@@ -135,7 +128,6 @@
 		<forward name="error/objectNotFound" path="/WEB-INF/jsp/common/generalError.jsp" />
 
 		<forward name="image/calendar" path="/images/calendar.png" />
-		<forward name="security/login" path="/do/login" />
 		<forward name="security/notAuthorized" path="/WEB-INF/jsp/security/notAuthorized.jsp" />
 		<forward name="edit/roles" path="/WEB-INF/jsp/edit/editRoles.jsp" />
 		<forward name="search/id" path="/do/search/id" />
@@ -159,11 +151,6 @@
 		
 		<action path="/systemInfo">
 			<forward name="success" path="/WEB-INF/jsp/common/unexpectedError.jsp" />
-		</action>
-
-		<action path="/login" parameter="security/login" name="login/authenticate">
-			<forward name="notAuthenticated" path="/WEB-INF/jsp/security/login.jsp" />
-			<forward name="authenticated" path="/view/projects" redirect="true" />
 		</action>
 
 		<action path="/notAuthorized" parameter="security/notAuthorized" />

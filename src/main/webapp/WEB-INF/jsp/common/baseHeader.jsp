@@ -19,7 +19,7 @@
 	        <bean:message key="navigation.me"/>
 	      </xplanner:link>
            &nbsp;&nbsp;
-	      <a href="<html:rewrite page="/do/logout"/>"><bean:message key="logout"/></a>
+	      <a href="/xplanner/view/logout"><bean:message key="logout"/></a>
 		    <form action="<html:rewrite action="/search/content" />" id="search_form" >
 		    	<!--
 		    	<bean:message key="contentsearch.label" />

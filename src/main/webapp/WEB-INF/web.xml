@@ -87,7 +87,7 @@
 		<filter-class>com.technoetic.xplanner.security.filter.FormSecurityFilter</filter-class>
 		<init-param>
 			<param-name>authenticatorUrl</param-name>
-			<param-value>/do/login</param-value>
+			<param-value>/view/login</param-value>
 		</init-param>
 		<init-param>
 			<param-name>securityConfiguration</param-name>
