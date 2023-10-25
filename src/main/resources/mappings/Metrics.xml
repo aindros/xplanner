@@ -141,8 +141,8 @@
             net.sf.xplanner.domain.PersonRole pr,
             net.sf.xplanner.domain.Permission p
         where
-           ((positive=1 and r1.left between r2.left and r2.right) or
-           (positive=0 and r1.id = r2.id)) and
+           ((positive=true and r1.left between r2.left and r2.right) or
+           (positive=false and r1.id = r2.id)) and
            pr.id.roleId = r1.id and p.principal = r2.id
         order by
            pr.id.personId, pr.id.projectId desc, r2.left desc
