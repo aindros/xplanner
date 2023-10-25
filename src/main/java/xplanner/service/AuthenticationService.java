@@ -23,6 +23,7 @@ import com.technoetic.xplanner.security.AuthenticationException;
 import com.technoetic.xplanner.security.Authenticator;
 import com.technoetic.xplanner.security.CredentialCookie;
 import com.technoetic.xplanner.security.SecurityHelper;
+import lombok.Setter;
 import net.sf.xplanner.domain.Person;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -36,7 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthenticationService {
 	private final Logger log = Logger.getLogger(getClass());
 
-	private @Autowired Authenticator authenticator;
+	private @Autowired @Setter Authenticator authenticator;
 
 	public void authenticate(Person user,
 	                         HttpServletRequest httpServletRequest,

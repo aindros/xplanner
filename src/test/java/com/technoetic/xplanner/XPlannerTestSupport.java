@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import junit.extensions.FieldAccessor;
 import junit.framework.Assert;
+import lombok.NoArgsConstructor;
 import net.sf.xplanner.domain.DataSample;
 import net.sf.xplanner.domain.History;
 import net.sf.xplanner.domain.Person;
@@ -125,12 +126,17 @@ public class XPlannerTestSupport {
         }
     }
 
+    @NoArgsConstructor
     public static class XHttpServletRequestSimulator extends HttpServletRequestSimulator {
         private Locale locale;
         private String servletPath;
         private String contextPath;
         private String remoteAddr;
         private Cookie[] cookies;
+
+        public XHttpServletRequestSimulator(Locale locale) {
+            this.locale = locale;
+        }
 
         public void setLocale(Locale locale) {
             this.locale = locale;
