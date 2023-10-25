@@ -19,9 +19,11 @@
 
 package xplanner.config;
 
+import com.technoetic.xplanner.XPlannerProperties;
 import com.technoetic.xplanner.security.Authenticator;
 import com.technoetic.xplanner.security.AuthenticatorImpl;
 import org.flywaydb.core.Flyway;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +31,8 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 
 @Configuration
 public class XPlannerConfiguration {
+	private final XPlannerProperties properties = new XPlannerProperties();
+
 	@Bean
 	public Authenticator authenticator() {
 		return new AuthenticatorImpl();
@@ -49,7 +53,10 @@ public class XPlannerConfiguration {
 	 */
 	@Bean
 	public Flyway flyway() {
+		String conncetionUrl = properties.getProperty("hibernate.connection.url");
+		String username = properties.getProperty("hibernate.connection.username");
+		String password = properties.getProperty("hibernate.connection.password");
 
-		return null;
+		return Flyway.configure().dataSource(conncetionUrl, username, password).load();
 	}
 }

@@ -41,6 +41,8 @@ public class StartupApplicationListener implements ApplicationListener<ContextRe
 	private void singleStartup(ContextRefreshedEvent event) {
 		if (!event.getApplicationContext().equals(applicationContext) || !startOnce) return;
 
+		flyway.migrate();
+
 		startOnce = false;
 	}
 }
