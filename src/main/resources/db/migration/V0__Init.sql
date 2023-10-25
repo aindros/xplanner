@@ -22,7 +22,7 @@ CREATE TABLE history (
   action varchar(255) DEFAULT NULL,
   description varchar(255) DEFAULT NULL,
   person_id INT DEFAULT NULL,
-  notified bit(1) DEFAULT NULL,
+  notified BOOLEAN DEFAULT NULL,
   PRIMARY KEY (id)
 );
 
@@ -96,12 +96,12 @@ CREATE TABLE permission (
   name varchar(255) DEFAULT NULL,
   resource_type varchar(255) DEFAULT NULL,
   resource_id INT DEFAULT NULL,
-  positive bit(1) NOT NULL DEFAULT b'1',
+  positive BOOLEAN NOT NULL DEFAULT TRUE,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE person (
-  id INT NOT NULL DEFAULT '0',
+  id INT NOT NULL,
   last_update TIMESTAMP DEFAULT NULL,
   name varchar(255) DEFAULT NULL,
   email varchar(255) DEFAULT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE person (
   initials varchar(255) DEFAULT NULL,
   userId varchar(255) DEFAULT NULL,
   password varchar(255) DEFAULT NULL,
-  is_hidden bit(1) DEFAULT NULL,
+  is_hidden BOOLEAN DEFAULT FALSE,
   PRIMARY KEY (id)
 );
 
@@ -125,7 +125,7 @@ CREATE TABLE project (
   last_update TIMESTAMP DEFAULT NULL,
   name varchar(255) DEFAULT NULL,
   description TEXT,
-  is_hidden bit(1) DEFAULT NULL,
+  is_hidden BOOLEAN DEFAULT NULL,
   backlog_id INT DEFAULT NULL,
   PRIMARY KEY (id)
 );
@@ -179,7 +179,7 @@ CREATE TABLE task (
   created_date date DEFAULT NULL,
   estimated_hours DECIMAL(15, 2) DEFAULT NULL,
   original_estimate DECIMAL(15, 2) DEFAULT NULL,
-  is_complete bit(1) DEFAULT NULL,
+  is_complete BOOLEAN DEFAULT NULL,
   story_id INT NOT NULL DEFAULT '0',
   disposition char(1) NOT NULL DEFAULT 'p',
   PRIMARY KEY (id)
