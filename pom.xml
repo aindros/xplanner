@@ -68,6 +68,13 @@
 		  <version>8.5.13</version>
 	  </dependency>
 
+	  <!-- Database connectors -->
+	  <dependency>
+		  <groupId>org.postgresql</groupId>
+		  <artifactId>postgresql</artifactId>
+		  <version>42.6.0</version>
+	  </dependency>
+
 <!--    <dependency>-->
 <!--      <groupId>org.mariadb.jdbc</groupId>-->
 <!--      <artifactId>mariadb-java-client</artifactId>-->
