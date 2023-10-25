@@ -22,14 +22,14 @@ import com.technoetic.xplanner.XPlannerTestSupport;
 import com.technoetic.xplanner.security.AuthenticationException;
 import com.technoetic.xplanner.security.MockAuthenticator;
 
-public class TestAuthenticationAction extends TestCase {
+public class TestAuthenticationService extends TestCase {
     private AuthenticationAction action;
     private Properties properties;
     private XPlannerTestSupport support;
     private DynaActionForm dynaActionForm;
     private MockAuthenticator mockAuthenticator;
 
-    public TestAuthenticationAction(String s) {
+    public TestAuthenticationService(String s) {
         super(s);
     }
 
