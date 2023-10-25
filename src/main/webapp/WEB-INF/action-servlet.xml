@@ -11,15 +11,6 @@
 		<property name="authorizationRequired" value="false" />
 	</bean>
 
-	<bean name="/logout" class="com.technoetic.xplanner.actions.LogoutAction" />
-
-	<!--
-		<bean name="/logout" parameter="security/logout"
-		class="com.technoetic.xplanner.actions.DispatchForward"> <bean>
-		<property name="authorizationRequired"> <value>false</value>
-		</property> </bean> </bean>
-	-->
-
 	<bean name="/view/twikiformat" class="com.technoetic.xplanner.actions.DispatchForward">
 		<property name="authorizationRequired" value="false" />
 	</bean>

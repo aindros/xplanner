@@ -155,12 +155,6 @@
 
 		<action path="/notAuthorized" parameter="security/notAuthorized" />
 
-		<action path="/logout" />
-
-		<!--
-			<action path="/logout" parameter="security/logout" > </action>
-		-->
-
 		<action path="/view/twikiformat" parameter="view/twikiformat" />
 
 		<action path="/view/projects" parameter="view/projects" />
