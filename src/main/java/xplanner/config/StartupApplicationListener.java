@@ -19,37 +19,28 @@
 
 package xplanner.config;
 
-import com.technoetic.xplanner.security.Authenticator;
-import com.technoetic.xplanner.security.AuthenticatorImpl;
 import org.flywaydb.core.Flyway;
-import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 
-@Configuration
-public class XPlannerConfiguration {
-	@Bean
-	public Authenticator authenticator() {
-		return new AuthenticatorImpl();
+@Component
+public class StartupApplicationListener implements ApplicationListener<ContextRefreshedEvent> {
+	private @Autowired ApplicationContext applicationContext;
+	private @Autowired Flyway flyway;
+
+	private static boolean startOnce = true;
+
+	@Override
+	public void onApplicationEvent(ContextRefreshedEvent event) {
+		singleStartup(event);
 	}
 
-	@Bean
-	public MessageSource messageSource() {
-		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+	private void singleStartup(ContextRefreshedEvent event) {
+		if (!event.getApplicationContext().equals(applicationContext) || !startOnce) return;
 
-		messageSource.setBasename("classpath:messages/messages");
-		messageSource.setDefaultEncoding("UTF-8");
-		return messageSource;
-	}
-
-	/**
-	 * @see StartupApplicationListener
-	 * @return Flyway bean
-	 */
-	@Bean
-	public Flyway flyway() {
-
-		return null;
+		startOnce = false;
 	}
 }
