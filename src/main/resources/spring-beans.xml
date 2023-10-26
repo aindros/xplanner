@@ -49,8 +49,9 @@
 	
 	<context:component-scan base-package="net.sf.xplanner.rest,
 	                                      xplanner.config,
-	                                      xplanner.service" />
-  
+	                                      xplanner.service,
+	                                      xplanner.repository," />
+
   <bean id="domainSpecificPropertiesFactory" class="com.technoetic.xplanner.DomainSpecificPropertiesFactory">
     <constructor-arg><ref local="sessionFactory"/></constructor-arg>
     <constructor-arg><ref local="properties"/></constructor-arg>
