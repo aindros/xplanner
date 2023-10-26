@@ -134,6 +134,7 @@ public class LinkTag extends org.apache.struts.taglib.html.LinkTag {
            if (mapping == null){
         	   //              throw new JspTagException("can't find ActionMapping in request");
         	   returnToUri = ((ServletRequestAttributes)request.getAttribute("org.springframework.web.context.request.RequestContextListener.REQUEST_ATTRIBUTES")).getRequest().getRequestURI();
+        	   returnToUri = returnToUri.replaceAll("^/xplanner", "");
            }else {
         	   returnToUri = "/do" + mapping.getPath();
         	   String oid = request.getParameter("oid");
