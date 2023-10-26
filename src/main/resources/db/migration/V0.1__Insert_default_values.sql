@@ -29,7 +29,9 @@ INSERT INTO permission (id, principal, name, resource_type, resource_id) VALUES
 INSERT INTO person_role (role_id, person_id, project_id) VALUES (5, 1, 0);
 
 INSERT INTO roles (id, role, lft, rgt) VALUES
-	(1, 'viewer',   1, 8),
-	(2, 'editor',   2, 7),
-	(3, 'admin',    3, 6),
-	(4, 'sysadmin', 4, 5);
+	(2, 'viewer',   1, 8),
+	(3, 'editor',   2, 7),
+	(4, 'admin',    3, 6),
+	(5, 'sysadmin', 4, 5);
+
+INSERT INTO identifier (nextid) VALUES (1);
