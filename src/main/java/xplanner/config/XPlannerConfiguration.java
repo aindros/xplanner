@@ -22,6 +22,7 @@ package xplanner.config;
 import com.technoetic.xplanner.XPlannerProperties;
 import com.technoetic.xplanner.security.Authenticator;
 import com.technoetic.xplanner.security.AuthenticatorImpl;
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -89,6 +90,7 @@ public class XPlannerConfiguration {
 		// enables Spring's own MessageSource message resolution mechanisms.
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.setTemplateResolver(templateResolver());
+		templateEngine.addDialect(layoutDialect());
 
 		return templateEngine;
 	}
@@ -102,5 +104,10 @@ public class XPlannerConfiguration {
 		viewResolver.setViewNames(new String[] {"thymeleaf/*.html"});
 
 		return viewResolver;
+	}
+
+	@Bean
+	public LayoutDialect layoutDialect() {
+		return new LayoutDialect();
 	}
 }
