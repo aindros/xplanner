@@ -6,6 +6,8 @@
  */
 package com.technoetic.xplanner.testing;
 
+import xplanner.util.ResourceUtils;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,9 +15,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class DateHelper {
-   public static final String RESOURCE_BUNDLE_NAME = "ResourceBundle";
-
-   static ResourceBundle messages = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME);
+   static ResourceBundle messages = ResourceBundle.getBundle(ResourceUtils.MESSAGE_RESOURCES);
 
    public static String getDateStringDaysFromToday(int daysFromToday)
    {

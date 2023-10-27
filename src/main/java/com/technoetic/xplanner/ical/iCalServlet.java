@@ -27,6 +27,7 @@ import com.technoetic.xplanner.security.AuthenticationException;
 import com.technoetic.xplanner.security.PersonPrincipal;
 import com.technoetic.xplanner.security.SecurityHelper;
 import com.technoetic.xplanner.security.auth.SystemAuthorizer;
+import xplanner.util.ResourceUtils;
 
 /**
  * Original implementation contributed by Emiliano Heyns (emiliano@iris-advies.nl)
@@ -129,7 +130,7 @@ public class iCalServlet extends HttpServlet {
 
         String overhead = null;
         try {
-            ResourceBundle resources = ResourceBundle.getBundle("ResourceBundle");
+            ResourceBundle resources = ResourceBundle.getBundle(ResourceUtils.MESSAGE_RESOURCES);
             overhead = resources.getString("task.type.overhead");
         } catch (Exception e) {
             overhead = null;

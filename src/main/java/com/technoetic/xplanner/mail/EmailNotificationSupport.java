@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import com.technoetic.xplanner.DomainSpecificPropertiesFactory;
 import com.technoetic.xplanner.XPlannerProperties;
+import xplanner.util.ResourceUtils;
 
 /**
  * User: mprokopowicz
@@ -66,7 +67,7 @@ public class EmailNotificationSupport {
 	public void sendNotifications(Map<Integer, List<Object>> notificationEmails, String emailHeaderKey, String subjectKey) {
 		Set<Integer> keySet = notificationEmails.keySet();
 		Iterator<Integer> iterator = keySet.iterator();
-		ResourceBundle bundle = ResourceBundle.getBundle("ResourceBundle");
+		ResourceBundle bundle = ResourceBundle.getBundle(ResourceUtils.MESSAGE_RESOURCES);
 		String subject = bundle.getString(subjectKey);
 		String emailHeader = bundle.getString(emailHeaderKey);
 		String emailFooter = bundle.getString(MissingTimeEntryNotifier.EMAIL_BODY_FOOTER);

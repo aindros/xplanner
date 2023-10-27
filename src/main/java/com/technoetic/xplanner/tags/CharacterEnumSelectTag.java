@@ -11,6 +11,7 @@ import org.apache.struts.taglib.html.SelectTag;
 import org.apache.struts.util.RequestUtils;
 
 import com.technoetic.xplanner.domain.CharacterEnum;
+import xplanner.util.ResourceUtils;
 
 public class CharacterEnumSelectTag extends SelectTag {
    public static final String EDIT_MODE = "edit";
@@ -23,7 +24,7 @@ public class CharacterEnumSelectTag extends SelectTag {
    private String resourceType;
 
    public int doStartTag() throws JspException {
-      resourceBundle = ResourceBundle.getBundle("ResourceBundle");
+      resourceBundle = ResourceBundle.getBundle(ResourceUtils.MESSAGE_RESOURCES);
       if (EDIT_MODE.equals(mode)) {
          return super.doStartTag();
       } else {

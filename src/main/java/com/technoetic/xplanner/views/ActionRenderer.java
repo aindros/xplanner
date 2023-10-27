@@ -12,6 +12,7 @@ import com.technoetic.xplanner.domain.ActionMapping;
 import com.technoetic.xplanner.domain.Nameable;
 import com.technoetic.xplanner.util.LogUtil;
 import com.technoetic.xplanner.util.StringUtilities;
+import xplanner.util.ResourceUtils;
 
 public class ActionRenderer {
     private static Logger log = LogUtil.getLogger();
@@ -65,7 +66,7 @@ public class ActionRenderer {
        if (!shouldUseOnclick()) return "";
        Object[] messageArgs = new Object[2];
 //DEBT Spring load
-       String format = ResourceBundle.getBundle("ResourceBundle").getString(action.getConfirmationKey());
+       String format = ResourceBundle.getBundle(ResourceUtils.MESSAGE_RESOURCES).getString(action.getConfirmationKey());
        messageArgs[0] = getDomainType();
        messageArgs[1] = StringUtilities.replaceQuotationMarks(object.getName());
        return "return confirm('" + MessageFormat.format(format, messageArgs) + "')";

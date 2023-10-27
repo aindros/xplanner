@@ -56,6 +56,7 @@ import com.technoetic.xplanner.domain.NoteAttachable;
 import com.technoetic.xplanner.testing.DateHelper;
 import com.technoetic.xplanner.util.LogUtil;
 import com.technoetic.xplanner.util.TimeGenerator;
+import xplanner.util.ResourceUtils;
 
 /**
  * User: mprokopowicz
@@ -75,7 +76,6 @@ public class XPlannerWebTesterImpl extends net.sourceforge.jwebunit.junit.WebTes
          return ((String) string1).trim().equals(((String) string2).trim()) ? 0 : -1;
       }
    };
-   protected static final String RESOURCE_BUNDLE_NAME = DateHelper.RESOURCE_BUNDLE_NAME;
    private static final String MAIN_TABLE_ID = "objecttable";
    private static final String DELETE_IMAGE = "delete.gif";
    private static final String EDIT_IMAGE = "edit.gif";
@@ -93,7 +93,7 @@ public class XPlannerWebTesterImpl extends net.sourceforge.jwebunit.junit.WebTes
       properties = new XPlannerProperties();
       baseUrl = XPlannerTestSupport.getAbsoluteTestURL();
       getTestContext().setBaseUrl(baseUrl);
-      getTestContext().setResourceBundleName(RESOURCE_BUNDLE_NAME);
+      getTestContext().setResourceBundleName(ResourceUtils.MESSAGE_RESOURCES);
    }
 
    public String addFeature(String name, String description) {
