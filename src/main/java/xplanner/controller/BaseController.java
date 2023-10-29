@@ -45,7 +45,6 @@ public abstract class BaseController {
 		model.addAttribute("loggedUsername",    SecurityHelper.getUserPrincipal(request).getName());
 		model.addAttribute("requestURL",        requestURL);
 		model.addAttribute("authenticatedUser", authenticationService.retrieveAuthenticatedUser(request));
-		model.addAttribute("pageLayout",        new PageLayout());
 		model.addAttribute("footerMessage",     footerMessage);
 
 		XPlannerProperties properties = new XPlannerProperties();
