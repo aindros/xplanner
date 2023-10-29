@@ -34,6 +34,7 @@ import org.thymeleaf.spring3.SpringTemplateEngine;
 import org.thymeleaf.spring3.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring3.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
+import xplanner.ui.thymeleaf.dialect.XPlannerDialect;
 
 @Configuration
 public class XPlannerConfiguration {
@@ -90,6 +91,7 @@ public class XPlannerConfiguration {
 		// enables Spring's own MessageSource message resolution mechanisms.
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.setTemplateResolver(templateResolver());
+		templateEngine.addDialect(new XPlannerDialect(messageSource2()));
 		templateEngine.addDialect(layoutDialect());
 
 		return templateEngine;
