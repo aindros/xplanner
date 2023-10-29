@@ -22,6 +22,7 @@ package xplanner.controller;
 import com.technoetic.xplanner.security.AuthenticationException;
 import com.technoetic.xplanner.security.SecurityHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 import xplanner.service.AuthenticationService;
 
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public abstract class BaseController {
 	private @Autowired AuthenticationService authenticationService;
+	protected @Autowired MessageSource messageSource;
 
 	protected void defaultModelAttributes(Model model, HttpServletRequest request) throws AuthenticationException {
 		model.addAttribute("loggedUsername",    SecurityHelper.getUserPrincipal(request).getName());
