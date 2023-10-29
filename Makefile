@@ -29,3 +29,6 @@ clean: stop
 
 yoda: clean deploy start tail
 yodad: clean deploy debug tail
+
+kill:
+	@for pid in `ps aux | grep java | grep -Ev 'grep|intelli' | awk '{print $2}'`; do kill -9 $pid; done
