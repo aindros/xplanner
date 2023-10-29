@@ -23,3 +23,7 @@ tail:
 clean: stop
 	mvn clean
 	@rm -rf ${CATALINA_HOME}/webapps/xplanner
+	@rm -rf ${CATALINA_HOME}/webapps/xplanner.war
+	@rm -rf ${CATALINA_HOME}/logs/*.log
+	@rm -rf ${CATALINA_HOME}/logs/*.txt
+
