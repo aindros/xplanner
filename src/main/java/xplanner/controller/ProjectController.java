@@ -25,13 +25,16 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.Locale;
+
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Controller
 @RequestMapping("/projects")
 public class ProjectController {
 	@RequestMapping(method = GET)
-	public String doViewProjects(HttpServletRequest request, ModelMap model) {
+	public String doViewProjects(HttpServletRequest request, ModelMap model,
+	                             Locale locale) {
 		model.addAttribute("request", request);
 
 		return "view/projects";
