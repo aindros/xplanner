@@ -45,7 +45,7 @@ public class XPlannerConfiguration {
 	}
 
 	@Bean
-	public MessageSource messageSource() {
+	public MessageSource messageSource2() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 
 		messageSource.setBasename("classpath:messages/messages");
