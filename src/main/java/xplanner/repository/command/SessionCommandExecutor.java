@@ -23,13 +23,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.SessionFactoryUtils;
+import org.springframework.transaction.annotation.Transactional;
 
-public abstract class SessionCommandExecutor<R> {
+public abstract class SessionCommandExecutor {
 	protected @Autowired SessionFactory sessionFactory;
 
-	public R execute(SessionCommand<R> command) {
-		Session session = SessionFactoryUtils.getSession(sessionFactory, Boolean.FALSE);
-		R r = command.execute(session);
+	public <F> F execute(SessionCommand<F> command) {
+		Session session = SessionFactoryUtils.getSession(sessionFactory, Boolean.TRUE);
+		F r = command.execute(session);
 		session.close();
 
 		return r;

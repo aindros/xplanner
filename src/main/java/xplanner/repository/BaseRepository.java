@@ -22,7 +22,7 @@ package xplanner.repository;
 import xplanner.repository.command.FindByCommand;
 import xplanner.repository.command.SessionCommandExecutor;
 
-public abstract class BaseRepository<T, K> extends SessionCommandExecutor<T> implements Repository<T, K> {
+public abstract class BaseRepository<T, K> extends SessionCommandExecutor implements Repository<T, K> {
 	protected final Class<T> domainClass;
 
 	protected BaseRepository(Class<T> domainClass) {
