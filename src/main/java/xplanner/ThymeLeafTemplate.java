@@ -33,6 +33,6 @@ public enum ThymeLeafTemplate {
 
 	ThymeLeafTemplate(String pageName) {
 		this.pageName = String.format("%s/%s.%s", PREFIX, pageName, SUFFIX);
-		redirectUrl = "redirect:/" + this.pageName;
+		redirectUrl = "redirect:/" + pageName;
 	}
 }
