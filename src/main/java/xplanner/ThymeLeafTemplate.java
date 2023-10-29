@@ -22,6 +22,7 @@ package xplanner;
 public enum ThymeLeafTemplate {
 	LOGIN("login"),
 	PROJECTS("projects"),
+	ROOT(""),
 	;
 
 	private static final String PREFIX = "thymeleaf";

@@ -262,6 +262,7 @@
 
 	<servlet-mapping>
 		<servlet-name>mvc-dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
 		<url-pattern>/login</url-pattern>
 		<url-pattern>/projects</url-pattern>
 	</servlet-mapping>

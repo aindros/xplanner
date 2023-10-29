@@ -84,6 +84,6 @@ public class LoginController {
 			return ThymeLeafTemplate.LOGIN.pageName;
 		}
 
-		return "redirect:/view/projects";
+		return ThymeLeafTemplate.ROOT.redirectUrl;
 	}
 }
