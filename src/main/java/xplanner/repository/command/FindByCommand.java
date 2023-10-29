@@ -21,6 +21,7 @@ package xplanner.repository.command;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import xplanner.util.QueryUtils;
 
 import java.util.List;
 
@@ -41,8 +42,7 @@ public class FindByCommand<T, K> implements SessionCommand<T> {
 	@SuppressWarnings("unchecked")
 	public T execute(Session session) {
 		Query query = session.createQuery("from e in " + domainClass + " where e." + fieldName + " = :" + fieldName);
-		if (id instanceof String)
-			query.setString(fieldName, (String) id);
+		QueryUtils.setParameter(query, fieldName, fieldValue);
 		query.setCacheable(cachable);
 
 		List<?> list = query.list();
