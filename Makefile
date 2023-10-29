@@ -27,3 +27,5 @@ clean: stop
 	@rm -rf ${CATALINA_HOME}/logs/*.log
 	@rm -rf ${CATALINA_HOME}/logs/*.txt
 
+yoda: clean deploy start tail
+yodad: clean deploy debug tail
