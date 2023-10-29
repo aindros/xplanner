@@ -20,7 +20,9 @@
 package xplanner;
 
 public enum ThymeLeafTemplate {
-	LOGIN("login");
+	LOGIN("login"),
+	PROJECTS("projects"),
+	;
 
 	private static final String PREFIX = "thymeleaf";
 	private static final String SUFFIX = "html";
@@ -30,6 +32,6 @@ public enum ThymeLeafTemplate {
 
 	ThymeLeafTemplate(String pageName) {
 		this.pageName = String.format("%s/%s.%s", PREFIX, pageName, SUFFIX);
-		redirectUrl = "redirect:" + this.pageName;
+		redirectUrl = "redirect:/" + this.pageName;
 	}
 }
