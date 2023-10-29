@@ -1,6 +1,6 @@
 /*-
  * XPlanner is a software to keep track of your working activities
- * Copyright (C) 2023  Alessandro Iezzi <aiezzi AT alessandroiezzi PERIOD it>
+ * Copyright (C) 2021, 2023  Alessandro Iezzi <aiezzi AT alessandroiezzi PERIOD it>
  *
  * XPlanner is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published
