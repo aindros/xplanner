@@ -27,12 +27,17 @@ import org.springframework.ui.Model;
 import xplanner.service.AuthenticationService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 public abstract class BaseController {
 	private @Autowired AuthenticationService authenticationService;
 	protected @Autowired MessageSource messageSource;
 
-	protected void defaultModelAttributes(Model model, HttpServletRequest request) throws AuthenticationException {
+	protected void defaultModelAttributes(Model model,
+	                                      HttpServletRequest request,
+	                                      Locale locale)
+			throws AuthenticationException {
+
 		model.addAttribute("loggedUsername",    SecurityHelper.getUserPrincipal(request).getName());
 		model.addAttribute("requestURL",        request.getRequestURL().toString());
 		model.addAttribute("authenticatedUser", authenticationService.retrieveAuthenticatedUser(request));
