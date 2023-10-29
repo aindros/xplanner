@@ -20,7 +20,7 @@
 package xplanner.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +33,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RequestMapping("/projects")
 public class ProjectController {
 	@RequestMapping(method = GET)
-	public String doViewProjects(HttpServletRequest request, ModelMap model,
+	public String doViewProjects(HttpServletRequest request,
+	                             Model model,
 	                             Locale locale) {
 		model.addAttribute("request", request);
 
