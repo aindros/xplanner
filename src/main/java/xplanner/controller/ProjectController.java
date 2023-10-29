@@ -19,9 +19,11 @@
 
 package xplanner.controller;
 
+import com.technoetic.xplanner.security.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
+import xplanner.ThymeLeafTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,12 +33,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Controller
 @RequestMapping("/projects")
-public class ProjectController {
+public class ProjectController extends BaseController {
 	@RequestMapping(method = GET)
 	public String doViewProjects(HttpServletRequest request,
 	                             Model model,
 	                             Locale locale) {
-		model.addAttribute("request", request);
 
 		return "view/projects";
 	}
