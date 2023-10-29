@@ -1,6 +1,5 @@
 <%@ page contentType = "text/html;charset=UTF-8"%>
-<%@ page import="com.technoetic.xplanner.actions.AuthenticationAction,
-                 com.technoetic.xplanner.security.Authenticator,
+<%@ page import="com.technoetic.xplanner.security.Authenticator,
                  com.technoetic.xplanner.security.auth.SystemAuthorizer,
                  java.util.Collection,
                  java.util.Iterator,
