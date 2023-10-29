@@ -36,3 +36,9 @@
 	color: #ccc !important;
 	fill: #ccc;
 }
+
+.table-xplanner > thead > tr > th {
+	background: #497dad !important;
+	color: #ffffff;
+	fill: #ffffff;
+}
