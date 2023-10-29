@@ -29,15 +29,18 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xplanner.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 
 @Service
-public class AuthenticationService {
+public class AuthenticationService extends BaseService {
 	private final Logger log = Logger.getLogger(getClass());
 
 	private @Autowired @Setter Authenticator authenticator;
+	private @Autowired @Setter UserRepository userRepository;
 
 	public void authenticate(Person user,
 	                         HttpServletRequest httpServletRequest,
@@ -57,5 +60,18 @@ public class AuthenticationService {
 	                   HttpServletResponse httpServletResponse) throws AuthenticationException {
 		authenticator.logout(httpServletRequest, SecurityHelper.getRemoteUserId(httpServletRequest));
 		new CredentialCookie(httpServletRequest, httpServletResponse).remove();
+	}
+
+	public Person retrieveAuthenticatedUser(HttpServletRequest request) {
+		if (!SecurityHelper.isUserAuthenticated(request)) return null;
+
+		try {
+			Principal user = SecurityHelper.getUserPrincipal(request);
+			return userRepository.findByUserId(user.getName());
+		} catch (AuthenticationException e) {
+			log.error("Error on getting user's detail", e);
+		}
+
+		return null;
 	}
 }
