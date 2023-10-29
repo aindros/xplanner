@@ -25,13 +25,13 @@ import org.hibernate.Session;
 import java.util.List;
 
 public class FindByCommand<T, K> implements SessionCommand<T> {
-	private final K id;
+	private final K fieldValue;
 	private final Class<T> domainClass;
 	private final String fieldName;
 	private final boolean cachable;
 
-	public FindByCommand(String fieldName, K id, Class<T> domainClass, boolean cachable) {
-		this.id = id;
+	public FindByCommand(String fieldName, K fieldValue, Class<T> domainClass, boolean cachable) {
+		this.fieldValue = fieldValue;
 		this.domainClass = domainClass;
 		this.fieldName = fieldName;
 		this.cachable = cachable;
