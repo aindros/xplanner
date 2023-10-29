@@ -37,8 +37,10 @@ public class ProjectController extends BaseController {
 	@RequestMapping(method = GET)
 	public String doViewProjects(HttpServletRequest request,
 	                             Model model,
-	                             Locale locale) {
+	                             Locale locale) throws AuthenticationException {
+		defaultModelAttributes(model, request, locale);
 
+		/* return ThymeLeafTemplate.PROJECTS.pageName; */
 		return "view/projects";
 	}
 }
