@@ -19,12 +19,14 @@
 
 package xplanner.controller;
 
+import com.technoetic.xplanner.XPlannerProperties;
 import com.technoetic.xplanner.security.AuthenticationException;
 import com.technoetic.xplanner.security.SecurityHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 import xplanner.service.AuthenticationService;
+import xplanner.ui.PageLayout;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
@@ -37,9 +39,22 @@ public abstract class BaseController {
 	                                      HttpServletRequest request,
 	                                      Locale locale)
 			throws AuthenticationException {
+		String requestURL = request.getRequestURL().toString();
+		String footerMessage = messageSource.getMessage("footer.message", new String[] {"/xplanner/do/systemInfo"}, "", locale);
 
 		model.addAttribute("loggedUsername",    SecurityHelper.getUserPrincipal(request).getName());
-		model.addAttribute("requestURL",        request.getRequestURL().toString());
+		model.addAttribute("requestURL",        requestURL);
 		model.addAttribute("authenticatedUser", authenticationService.retrieveAuthenticatedUser(request));
+		model.addAttribute("pageLayout",        new PageLayout());
+		model.addAttribute("footerMessage",     footerMessage);
+
+		XPlannerProperties properties = new XPlannerProperties();
+		String version = properties.getProperty(XPlannerProperties.XPLANNER_VERSION_KEY);
+		String revision = properties.getProperty(XPlannerProperties.XPLANNER_BUILD_REVISION_KEY);
+		String date = properties.getProperty(XPlannerProperties.XPLANNER_BUILD_DATE_KEY);
+
+		String versionLabel =
+				messageSource.getMessage("app.label.version", new String[] {version, date, revision}, "", locale);
+		model.addAttribute("versionLabel", versionLabel);
 	}
 }
