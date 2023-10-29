@@ -96,6 +96,7 @@ public class Project extends NamedObject implements java.io.Serializable, NoteAt
 	}
 
 	@Transient
+	@Deprecated
     public Iteration getCurrentIteration() {
         return IterationRepository.getCurrentIteration(getId());
     }
