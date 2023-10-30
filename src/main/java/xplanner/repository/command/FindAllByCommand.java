@@ -21,6 +21,7 @@ package xplanner.repository.command;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import xplanner.sql.Order;
 import xplanner.util.QueryUtils;
 
 import java.util.ArrayList;
@@ -31,11 +32,16 @@ public class FindAllByCommand<T, K> implements SessionCommand<List<T>> {
 	private final Map<String, Object> queryParameters;
 	private final Class<T> domainClass;
 	private final boolean cachable;
+	private final Order order;
 
-	public FindAllByCommand(Map<String, Object> queryParameters, Class<T> domainClass, boolean cachable) {
+	public FindAllByCommand(Map<String, Object> queryParameters,
+	                        Order order,
+	                        Class<T> domainClass,
+	                        boolean cachable) {
 		this.queryParameters = queryParameters;
 		this.domainClass = domainClass;
 		this.cachable = cachable;
+		this.order = order;
 	}
 
 	@Override
@@ -52,6 +58,10 @@ public class FindAllByCommand<T, K> implements SessionCommand<List<T>> {
 				if (i++ < queryParameters.size() - 1)
 					sb.append(" and ");
 			}
+		}
+
+		if (order != null) {
+			sb.append(" ").append(order.toSql());
 		}
 
 		Query query = session.createQuery(sb.toString());

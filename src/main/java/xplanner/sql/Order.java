@@ -17,28 +17,34 @@
  * package xplanner.controller;
  */
 
-package xplanner.repository;
+package xplanner.sql;
 
-import net.sf.xplanner.domain.Person;
-import net.sf.xplanner.domain.Project;
-import org.springframework.stereotype.Component;
-import xplanner.repository.command.FindAllByCommand;
-import xplanner.repository.command.FindByCommand;
+import lombok.Getter;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+public class Order {
+	private @Getter final String[] fields;
+	private @Getter final Direction direction;
 
-@Component("projectRepository")
-public class ProjectRepositoryImpl extends BaseRepository<Project, Integer> implements ProjectRepository {
-	protected ProjectRepositoryImpl() {
-		super(Project.class);
+	public Order(Direction direction, String...fields) {
+		this.direction = direction;
+		this.fields = fields;
 	}
 
-	public List<Project> findProjectsByHidden(boolean hidden) {
-		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("hidden", hidden);
+	public enum Direction {
+		ASC, DESC
+	}
 
-		return execute(new FindAllByCommand<>(parameters, null, Project.class, true));
+	public String toSql() {
+		if (fields == null || direction == null) return "";
+
+		StringBuilder sb = new StringBuilder("order by ");
+		for (int i = 0; i < fields.length; i++) {
+			sb.append(fields[i]);
+			if (i < fields.length - 1)
+				sb.append(",");
+		}
+		sb.append(" ").append(direction.name());
+
+		return sb.toString();
 	}
 }

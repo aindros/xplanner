@@ -19,7 +19,12 @@
 
 package xplanner.repository;
 
+import xplanner.sql.Order;
+
+import java.util.List;
+
 public interface Repository<T, K> {
 	T findById(K id);
 	T findById(K id, boolean cachable);
+	List<T> findAll(Order order);
 }

@@ -19,8 +19,12 @@
 
 package xplanner.repository;
 
+import xplanner.repository.command.FindAllByCommand;
 import xplanner.repository.command.FindByCommand;
 import xplanner.repository.command.SessionCommandExecutor;
+import xplanner.sql.Order;
+
+import java.util.List;
 
 public abstract class BaseRepository<T, K> extends SessionCommandExecutor implements Repository<T, K> {
 	protected final Class<T> domainClass;
@@ -37,5 +41,10 @@ public abstract class BaseRepository<T, K> extends SessionCommandExecutor implem
 	@Override
 	public T findById(K id, boolean cachable) {
 		return execute(new FindByCommand<>("id", id, domainClass, cachable));
+	}
+
+	@Override
+	public List<T> findAll(Order order) {
+		return execute(new FindAllByCommand<>(null, order, domainClass, false));
 	}
 }
