@@ -26,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 import xplanner.service.AuthenticationService;
-import xplanner.ui.PageLayout;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
