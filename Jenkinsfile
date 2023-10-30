@@ -21,7 +21,9 @@ pipeline {
 
         stage('deploy') {
             steps {
-                build job: "xplanner-deploy", wait: true
+                script {
+                    scp target/xplanner.war xplanner@86.107.98.155:~/xplanner.war
+                }
             }
         }
     }
