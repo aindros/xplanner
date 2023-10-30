@@ -37,6 +37,7 @@ import org.hibernate.dialect.Dialect;
 
 import com.technoetic.xplanner.XPlannerProperties;
 import com.technoetic.xplanner.util.LogUtil;
+import org.springframework.orm.hibernate3.SessionFactoryUtils;
 
 /** @noinspection ClassNamePrefixedWithPackageName*/
 public class HibernateHelper {
@@ -120,13 +121,7 @@ public class HibernateHelper {
 
  
     public static Session getSession(ServletRequest request) {
-       Session session = (Session)request.getAttribute(SESSION_ATTRIBUTE_KEY);
-       if (LOG.isDebugEnabled()) {
-         if (session != ThreadSession.get()) {
-           LOG.info("Session storage mismatch thread=" + ThreadSession.get() + " HBHelper=" + session);
-         }
-       }
-       return session;
+	    return (Session) SessionFactoryUtils.getSession(getSessionFactory(), true);
     }
 
     public static void setSession(ServletRequest request, Session session) {
