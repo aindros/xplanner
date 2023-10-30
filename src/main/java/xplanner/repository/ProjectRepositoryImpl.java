@@ -25,7 +25,9 @@ import org.springframework.stereotype.Component;
 import xplanner.repository.command.FindAllByCommand;
 import xplanner.repository.command.FindByCommand;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component("projectRepository")
 public class ProjectRepositoryImpl extends BaseRepository<Project, Integer> implements ProjectRepository {
@@ -34,6 +36,9 @@ public class ProjectRepositoryImpl extends BaseRepository<Project, Integer> impl
 	}
 
 	public List<Project> findProjectsByHidden(boolean hidden) {
-		return execute(new FindAllByCommand<>("hidden", hidden, Project.class, true));
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("hidden", hidden);
+
+		return execute(new FindAllByCommand<>(parameters, Project.class, true));
 	}
 }

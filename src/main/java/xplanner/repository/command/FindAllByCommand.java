@@ -25,25 +25,43 @@ import xplanner.util.QueryUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class FindAllByCommand<T, K> implements SessionCommand<List<T>> {
-	private final K fieldValue;
+	private final Map<String, Object> queryParameters;
 	private final Class<T> domainClass;
-	private final String fieldName;
 	private final boolean cachable;
 
-	public FindAllByCommand(String fieldName, K fieldValue, Class<T> domainClass, boolean cachable) {
-		this.fieldValue = fieldValue;
+	public FindAllByCommand(Map<String, Object> queryParameters, Class<T> domainClass, boolean cachable) {
+		this.queryParameters = queryParameters;
 		this.domainClass = domainClass;
-		this.fieldName = fieldName;
 		this.cachable = cachable;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<T> execute(Session session) {
-		Query query = session.createQuery("from e in " + domainClass + " where e." + fieldName + " = :" + fieldName);
-		QueryUtils.setParameter(query, fieldName, fieldValue);
+		StringBuilder sb = new StringBuilder("from e in ")
+				.append(domainClass);
+
+		if (queryParameters != null) {
+			sb.append(" where ");
+			int i = 0;
+			for (Map.Entry<String, Object> entry : queryParameters.entrySet()) {
+				sb.append("e.").append(entry.getKey()).append(" = :").append(entry.getKey());
+				if (i++ < queryParameters.size() - 1)
+					sb.append(" and ");
+			}
+		}
+
+		Query query = session.createQuery(sb.toString());
+
+		if (queryParameters != null) {
+			for (Map.Entry<String, Object> entry : queryParameters.entrySet()) {
+				QueryUtils.setParameter(query, entry.getKey(), entry.getValue());
+			}
+		}
+
 		query.setCacheable(cachable);
 
 		List<T> list = query.list();
