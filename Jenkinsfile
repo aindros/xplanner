@@ -22,7 +22,7 @@ pipeline {
         stage('deploy') {
             steps {
                 script {
-                    scp target/xplanner.war xplanner@86.107.98.155:~/xplanner.war
+                    sh 'scp target/xplanner.war xplanner@86.107.98.155:~/xplanner.war'
                 }
             }
         }
