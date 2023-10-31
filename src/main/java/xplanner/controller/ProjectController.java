@@ -21,6 +21,7 @@ package xplanner.controller;
 
 import com.technoetic.xplanner.security.AuthenticationException;
 import com.technoetic.xplanner.security.SecurityHelper;
+import net.sf.xplanner.domain.Permission;
 import net.sf.xplanner.domain.Project;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,10 @@ import xplanner.repository.ProjectRepository;
 import xplanner.sql.Order;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -45,11 +48,25 @@ public class ProjectController extends BaseController {
 
 	private @Autowired ProjectRepository projectRepository;
 
+	private void pagePermissions(HttpServletRequest request, Model model) throws AuthenticationException {
+		Map<String, Boolean> permissions = new HashMap<>();
+
+		boolean createProject = Permission.permissionMatches(Permission.PERM_CREATE_PROJECT,
+		                                                     Permission.RES_SYSTEM_PROJECT,
+		                                                     Project.ANY_PROJECT,
+		                                                     getPermissions(request).get(Project.ANY_PROJECT));
+
+		permissions.put(Permission.PERM_CREATE_PROJECT, createProject);
+
+		model.addAttribute("pagePermissions", permissions);
+	}
+
 	@RequestMapping(method = GET)
 	public String doViewProjects(HttpServletRequest request,
 	                             Model model,
 	                             Locale locale) throws AuthenticationException {
-		defaultModelAttributes(model, request, locale);
+		defaultModelAttributes(request, model, locale);
+		pagePermissions(request, model);
 
 		List<Project> projects = projectRepository.findAll(new Order(Order.Direction.ASC, "hidden", "name"),
 		                                                   SecurityHelper.getRemoteUserId(request));

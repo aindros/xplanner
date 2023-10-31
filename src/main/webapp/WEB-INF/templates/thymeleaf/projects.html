@@ -10,7 +10,10 @@
 		<div class="col-4 btn-toolbar mb-1">
 			<ul class="nav">
 				<li class="nav-item">
-					<a th:href="@{/do/edit/project(returnto=${requestURL})}" role="button" class="btn btn-primary" xplanner:text="#{projects.link.add_project}">
+					<a th:if='${pagePermissions.get("create.project")}'
+					        th:href="@{/do/edit/project(returnto=${requestURL})}"
+					        role="button" class="btn btn-primary"
+					        xplanner:text="#{projects.link.add_project}">
 						<i class="bi bi-file-earmark-plus"></i>
 					</a>
 				</li>
@@ -25,16 +28,18 @@
 		<table class="table table-striped table-xplanner">
 			<thead>
 			<tr>
+				<th scope="col" th:text="#{iterations.tableheading.actions}">Actions</th>
 				<th scope="col" th:text="#{objects.tableheading.id}">ID</th>
 				<th scope="col" th:text="#{projects.tableheading.name}">Name</th>
-				<th scope="col" th:text="#{projects.tableheading.iteration}">Iter</th>
+				<th scope="col" th:text="#{projects.tableheading.iteration}">Iteration</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr th:each="project: ${projects}">
+				<td></td>
 				<th><a th:href="@{/do/view/project(returnto=${requestURL},oid=${project.id})}" th:text="${project.id}"></a></th>
 				<td><a th:href="@{/do/view/project(returnto=${requestURL},oid=${project.id})}" th:text="${project.name}"></a></td>
-				<td>@mdo</td>
+				<td></td>
 			</tr>
 			</tbody>
 

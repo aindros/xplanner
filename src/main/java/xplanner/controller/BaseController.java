@@ -22,20 +22,30 @@ package xplanner.controller;
 import com.technoetic.xplanner.XPlannerProperties;
 import com.technoetic.xplanner.security.AuthenticationException;
 import com.technoetic.xplanner.security.SecurityHelper;
+import com.technoetic.xplanner.security.auth.PrincipalSpecificPermissionHelper;
+import net.sf.xplanner.domain.Permission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 import xplanner.service.AuthenticationService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public abstract class BaseController {
 	private @Autowired AuthenticationService authenticationService;
 	protected @Autowired MessageSource messageSource;
+	protected @Autowired PrincipalSpecificPermissionHelper principalSpecificPermissionHelper;
 
-	protected void defaultModelAttributes(Model model,
-	                                      HttpServletRequest request,
+	protected Map<Integer, List<Permission>> getPermissions(HttpServletRequest request) throws AuthenticationException {
+		return principalSpecificPermissionHelper.getPermissionsForPrincipal(SecurityHelper.getRemoteUserId(request));
+	}
+
+	protected void defaultModelAttributes(HttpServletRequest request,
+	                                      Model model,
 	                                      Locale locale)
 			throws AuthenticationException {
 		String requestURL = request.getRequestURL().toString();

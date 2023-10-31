@@ -20,6 +20,7 @@
 package xplanner.repository;
 
 import com.technoetic.xplanner.security.auth.Authorizer;
+import com.technoetic.xplanner.security.auth.PrincipalSpecificPermissionHelper;
 import net.sf.xplanner.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,6 +36,7 @@ import java.util.Map;
 public class ProjectRepositoryImpl extends BaseRepository<Project, Integer> implements ProjectRepository {
 	private @Autowired PersonRoleRepository personRoleRepository;
 	private @Autowired RoleRepository roleRepository2;
+	protected @Autowired PrincipalSpecificPermissionHelper principalSpecificPermissionHelper;
 
 	protected ProjectRepositoryImpl() {
 		super(Project.class);
@@ -60,12 +62,10 @@ public class ProjectRepositoryImpl extends BaseRepository<Project, Integer> impl
 		}
 
 		List<Role> roles = roleRepository2.findAllById(roleIds, null);
-
-		if (roles.size() == 1
-				&& personRoles.size() == 1
-				&& roles.get(0).getName().equals(Role.SYSADMIN)
-				&& personRoles.get(0).getProjectId() == 0) {
-			return super.findAll(order);
+		for (Role role : roles) {
+			if (role.getName().equals(Role.SYSADMIN)) {
+				return super.findAll(order);
+			}
 		}
 
 		return super.findAllById(projectIds, order);

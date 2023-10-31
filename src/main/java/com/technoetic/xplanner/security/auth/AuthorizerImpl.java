@@ -33,7 +33,6 @@ import com.technoetic.xplanner.security.AuthenticationException;
 
 public class AuthorizerImpl implements Authorizer {
    private final Map<Class,String> resourceTypes = new HashMap<Class,String>();
-   public static final Integer ANY_PROJECT = new Integer(0);
    private AuthorizerQueryHelper authorizerQueryHelper;
    private PrincipalSpecificPermissionHelper principalSpecificPermissionHelper;
 
@@ -78,16 +77,16 @@ public class AuthorizerImpl implements Authorizer {
                                 String permissionName) throws AuthenticationException {
       try {
          Map permissionsByProjectMap = principalSpecificPermissionHelper.getPermissionsForPrincipal(personId);
-         return permissionMatches(permissionName,
+         return Permission.permissionMatches(permissionName,
                                   resourceType,
                                   resourceId,
                                   (List) permissionsByProjectMap.get(new Integer(projectId)))
                 ||
                 // For 0.7 only sysadmins have any project permissions
-                permissionMatches(permissionName,
+                 Permission.permissionMatches(permissionName,
                                   resourceType,
                                   resourceId,
-                                  (List) permissionsByProjectMap.get(ANY_PROJECT));
+                                  (List) permissionsByProjectMap.get(Project.ANY_PROJECT));
       } catch (Exception e) {
          throw new AuthenticationException(e);
       }
@@ -159,36 +158,5 @@ public class AuthorizerImpl implements Authorizer {
 
    public void setAuthorizerQueryHelper(AuthorizerQueryHelper authorizerQueryHelper) {
       this.authorizerQueryHelper = authorizerQueryHelper;
-   }
-
-   private boolean isMatching(String pattern, String string) {
-      return pattern.endsWith("%")
-             ? string.startsWith(pattern.substring(0, pattern.length() - 1))
-             : string.equals(pattern);
-   }
-
-
-   private boolean permissionMatches(String permissionName,
-                                     String resourceType,
-                                     int resourceId,
-                                     List permissionsForProject) {
-      boolean hasNegativePermission = false;
-      boolean hasPositivePermission = false;
-      if (permissionsForProject != null) {
-         for (int i = 0; i < permissionsForProject.size(); i++) {
-            Permission permission = (Permission) permissionsForProject.get(i);
-            if (isMatching(permission.getResourceType(), resourceType) &&
-                (permission.getResourceId() == 0 || permission.getResourceId() == resourceId)) {
-               if (isMatching(permission.getName(), permissionName)) {
-                  if (permission.isPositive()) {
-                     hasPositivePermission = true;
-                  } else {
-                     hasNegativePermission = true;
-                  }
-               }
-            }
-         }
-      }
-      return hasPositivePermission && !hasNegativePermission;
    }
 }

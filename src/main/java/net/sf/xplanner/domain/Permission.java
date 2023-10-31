@@ -9,6 +9,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.List;
+
 /**
 *    XplannerPlus, agile planning software
 *    @author Maksym_Chyrkov. 
@@ -32,6 +34,10 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "permission")
 public class Permission implements java.io.Serializable {
 	private static final long serialVersionUID = 598781035652662657L;
+
+	public static final String PERM_CREATE_PROJECT = "create.project";
+	public static final String RES_SYSTEM_PROJECT = "system.project";
+
 	private int id;
 	private Integer principal;
 	private String name;
@@ -163,4 +169,34 @@ public class Permission implements java.io.Serializable {
 		return true;
 	}
 
+
+	private static boolean isMatching(String pattern, String string) {
+		return pattern.endsWith("%")
+				? string.startsWith(pattern.substring(0, pattern.length() - 1))
+				: string.equals(pattern);
+	}
+
+	public static boolean permissionMatches(String permissionName,
+	                                        String resourceType,
+	                                        int resourceId,
+	                                        List permissionsForProject) {
+		boolean hasNegativePermission = false;
+		boolean hasPositivePermission = false;
+		if (permissionsForProject != null) {
+			for (int i = 0; i < permissionsForProject.size(); i++) {
+				Permission permission = (Permission) permissionsForProject.get(i);
+				if (isMatching(permission.getResourceType(), resourceType) &&
+						(permission.getResourceId() == 0 || permission.getResourceId() == resourceId)) {
+					if (isMatching(permission.getName(), permissionName)) {
+						if (permission.isPositive()) {
+							hasPositivePermission = true;
+						} else {
+							hasNegativePermission = true;
+						}
+					}
+				}
+			}
+		}
+		return hasPositivePermission && !hasNegativePermission;
+	}
 }

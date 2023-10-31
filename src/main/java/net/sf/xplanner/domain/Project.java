@@ -49,6 +49,7 @@ import com.technoetic.xplanner.domain.repository.IterationRepository;
 public class Project extends NamedObject implements java.io.Serializable, NoteAttachable {
 	private static final long serialVersionUID = -6137321799143662647L;
 	public static final String HIDDEN = "hidden";
+	public static final int ANY_PROJECT = 0;
 	private Boolean hidden;
 	private Iteration backlog;
     private List<Iteration> iterations = new ArrayList<Iteration>();
