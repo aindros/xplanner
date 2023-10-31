@@ -87,7 +87,7 @@
 							</a>
 						</li>
 						<li>
-							<a th:href="@{/setting/me/status/{id}(id=${authenticatedUser.id},returnto=${requestURL})}" class="nav-link text-white">
+							<a th:href="@{/setting/me/status/{id}(id=${authenticatedUser.id},returnto=${requestURL})}" class="nav-link text-white" style="text-align: center">
 								<svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"/></svg>
 								<span th:utext="${loggedUsername}" th:remove="tag"></span>
 							</a>
