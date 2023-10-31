@@ -21,6 +21,7 @@ package xplanner.util;
 
 import org.hibernate.Query;
 
+import java.util.Collection;
 import java.util.Date;
 
 public class QueryUtils {
@@ -33,6 +34,10 @@ public class QueryUtils {
 			query.setDate(fieldName, (Date) fieldValue);
 		} else if (fieldValue instanceof Integer) {
 			query.setInteger(fieldName, (Integer) fieldValue);
+		} else if (fieldValue instanceof Collection) {
+			query.setParameterList(fieldName, (Collection) fieldValue);
+		} else {
+			query.setParameter(fieldName, fieldValue);
 		}
 	}
 
@@ -45,6 +50,9 @@ public class QueryUtils {
 			query.setDate(index, (Date) fieldValue);
 		} else if (fieldValue instanceof Integer) {
 			query.setInteger(index, (Integer) fieldValue);
+		} else {
+			query.setParameter(index, fieldValue);
 		}
+
 	}
 }
