@@ -25,29 +25,16 @@
 		<table class="table table-striped table-xplanner">
 			<thead>
 			<tr>
-				<th scope="col">#</th>
 				<th scope="col" th:text="#{objects.tableheading.id}">ID</th>
 				<th scope="col" th:text="#{projects.tableheading.name}">Name</th>
 				<th scope="col" th:text="#{projects.tableheading.iteration}">Iter</th>
 			</tr>
 			</thead>
 			<tbody>
-			<tr>
-				<th scope="row">1</th>
-				<td>Mark</td>
-				<td>Otto</td>
+			<tr th:each="project: ${projects}">
+				<th><a th:href="@{/do/view/project(returnto=${requestURL},oid=${project.id})}" th:text="${project.id}"></a></th>
+				<td><a th:href="@{/do/view/project(returnto=${requestURL},oid=${project.id})}" th:text="${project.name}"></a></td>
 				<td>@mdo</td>
-			</tr>
-			<tr>
-				<th scope="row">2</th>
-				<td>Jacob</td>
-				<td>Thornton</td>
-				<td>@fat</td>
-			</tr>
-			<tr>
-				<th scope="row">3</th>
-				<td colspan="2">Larry the Bird</td>
-				<td>@twitter</td>
 			</tr>
 			</tbody>
 
