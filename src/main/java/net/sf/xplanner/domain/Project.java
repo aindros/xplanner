@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.technoetic.xplanner.domain.NoteAttachable;
 import com.technoetic.xplanner.domain.repository.IterationRepository;
+import lombok.*;
 
 /**
 *    XplannerPlus, agile planning software
@@ -54,6 +55,9 @@ public class Project extends NamedObject implements java.io.Serializable, NoteAt
 	private Iteration backlog;
     private List<Iteration> iterations = new ArrayList<Iteration>();
 	private List<Person> notificationReceivers;
+
+	private @Transient boolean editable  = true;
+	private @Transient boolean deletable = true;
 
 	public Project() {
 	}
@@ -113,5 +117,25 @@ public class Project extends NamedObject implements java.io.Serializable, NoteAt
     @Column(name="\"value\"")
 	public Map<String,String> getAttributes() {
 		return super.getAttributes();
+	}
+
+	@Transient
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+	}
+
+	@Transient
+	public void setDeletable(boolean deletable) {
+		this.deletable = deletable;
+	}
+
+	@Transient
+	public boolean isEditable() {
+		return editable;
+	}
+
+	@Transient
+	public boolean isDeletable() {
+		return deletable;
 	}
 }

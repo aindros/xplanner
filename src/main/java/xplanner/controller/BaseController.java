@@ -20,17 +20,22 @@
 package xplanner.controller;
 
 import com.technoetic.xplanner.XPlannerProperties;
+import com.technoetic.xplanner.domain.Identifiable;
 import com.technoetic.xplanner.security.AuthenticationException;
 import com.technoetic.xplanner.security.SecurityHelper;
 import com.technoetic.xplanner.security.auth.PrincipalSpecificPermissionHelper;
+import lombok.Getter;
 import net.sf.xplanner.domain.Permission;
+import net.sf.xplanner.domain.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import xplanner.service.AuthenticationService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -46,7 +51,7 @@ public abstract class BaseController {
 
 	protected void defaultModelAttributes(HttpServletRequest request,
 	                                      Model model,
-	                                      Locale locale)
+	                                      Locale locale, ControllerData data)
 			throws AuthenticationException {
 		String requestURL = request.getRequestURL().toString();
 		String footerMessage = messageSource.getMessage("footer.message", new String[] {"/xplanner/do/systemInfo"}, "", locale);
@@ -64,5 +69,11 @@ public abstract class BaseController {
 		String versionLabel =
 				messageSource.getMessage("app.label.version", new String[] {version, date, revision}, "", locale);
 		model.addAttribute("versionLabel", versionLabel);
+
+		data.getPermissions().putAll(getPermissions(request));
+	}
+
+	protected static class ControllerData {
+		private final @Getter Map<Integer, List<Permission>> permissions = new HashMap<>();
 	}
 }

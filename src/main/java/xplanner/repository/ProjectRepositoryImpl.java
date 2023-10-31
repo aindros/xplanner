@@ -22,6 +22,8 @@ package xplanner.repository;
 import com.technoetic.xplanner.security.auth.Authorizer;
 import com.technoetic.xplanner.security.auth.PrincipalSpecificPermissionHelper;
 import net.sf.xplanner.domain.*;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import xplanner.repository.command.*;
@@ -68,6 +70,14 @@ public class ProjectRepositoryImpl extends BaseRepository<Project, Integer> impl
 			}
 		}
 
-		return super.findAllById(projectIds, order);
+		List<Project> projects = super.findAllById(projectIds, order);
+		CollectionUtils.filter(projects, new Predicate() {
+			@Override
+			public boolean evaluate(Object object) {
+				return !((Project) object).isHidden();
+			}
+		});
+
+		return projects;
 	}
 }

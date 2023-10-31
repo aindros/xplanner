@@ -35,7 +35,12 @@ import java.util.List;
 public class Permission implements java.io.Serializable {
 	private static final long serialVersionUID = 598781035652662657L;
 
-	public static final String PERM_CREATE_PROJECT = "create.project";
+	public static final String
+			PERM_ADMIN_EDIT        = "admin.edit",
+			PERM_CREATE_PROJECT    = "create.project",
+			PERM_HIDE_PROJECT      = "hide",
+			PERM_SYSADMIN_DELETE   = "sysadmin.delete";
+
 	public static final String RES_SYSTEM_PROJECT = "system.project";
 
 	private int id;

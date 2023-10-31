@@ -28,18 +28,37 @@
 		<table class="table table-striped table-xplanner">
 			<thead>
 			<tr>
-				<th scope="col" th:text="#{iterations.tableheading.actions}">Actions</th>
+				<th style="width: 15%" scope="col" th:text="#{iterations.tableheading.actions}">Actions</th>
 				<th scope="col" th:text="#{objects.tableheading.id}">ID</th>
 				<th scope="col" th:text="#{projects.tableheading.name}">Name</th>
 				<th scope="col" th:text="#{projects.tableheading.iteration}">Iteration</th>
+				<th th:if="${canViewHiddenProjects}" scope="col" th:text="#{projects.tableheading.ishidden}">Hidden</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr th:each="project: ${projects}">
-				<td></td>
+				<td>
+					<a class="btn"
+					        th:classappend="${project.editable? 'btn-primary' : 'btn-secondary disabled'}"
+					        role="button"
+					        th:aria-disabled="${!project.editable}"
+					        th:title="#{action.edit.project}">
+						<i class="bi bi-pencil-square"></i>
+					</a>
+
+					<a class="btn"
+					        th:classappend="${project.deletable? 'btn-primary' : 'btn-secondary disabled'}"
+					        role="button"
+					        th:aria-disabled="${!project.deletable}"
+					        th:title="#{action.delete.project}">
+						<i class="bi bi-trash"></i>
+					</a>
 				<th><a th:href="@{/do/view/project(returnto=${requestURL},oid=${project.id})}" th:text="${project.id}"></a></th>
 				<td><a th:href="@{/do/view/project(returnto=${requestURL},oid=${project.id})}" th:text="${project.name}"></a></td>
 				<td></td>
+				<td th:if="${canViewHiddenProjects}">
+					<i th:if="${project.hidden}" class="bi bi-check2 fs-2"></i>
+				</td>
 			</tr>
 			</tbody>
 

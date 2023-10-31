@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import xplanner.ThymeLeafTemplate;
 import xplanner.repository.ProjectRepository;
+import xplanner.service.PermissionService;
 import xplanner.sql.Order;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,13 +49,13 @@ public class ProjectController extends BaseController {
 
 	private @Autowired ProjectRepository projectRepository;
 
-	private void pagePermissions(HttpServletRequest request, Model model) throws AuthenticationException {
+	private void pagePermissions(Model model, ControllerData data) throws AuthenticationException {
 		Map<String, Boolean> permissions = new HashMap<>();
 
 		boolean createProject = Permission.permissionMatches(Permission.PERM_CREATE_PROJECT,
 		                                                     Permission.RES_SYSTEM_PROJECT,
 		                                                     Project.ANY_PROJECT,
-		                                                     getPermissions(request).get(Project.ANY_PROJECT));
+		                                                     data.getPermissions().get(Project.ANY_PROJECT));
 
 		permissions.put(Permission.PERM_CREATE_PROJECT, createProject);
 
@@ -62,17 +63,39 @@ public class ProjectController extends BaseController {
 	}
 
 	@RequestMapping(method = GET)
-	public String doViewProjects(HttpServletRequest request,
+	public String doViewProjects(final HttpServletRequest request,
 	                             Model model,
 	                             Locale locale) throws AuthenticationException {
-		defaultModelAttributes(request, model, locale);
-		pagePermissions(request, model);
+
+
+		ControllerData data = new ControllerData();
+
+		defaultModelAttributes(request, model, locale, data);
+		pagePermissions(model, data);
 
 		List<Project> projects = projectRepository.findAll(new Order(Order.Direction.ASC, "hidden", "name"),
 		                                                   SecurityHelper.getRemoteUserId(request));
+		boolean canViewHiddenProjects = true;
+		for (Project project : projects) {
+			boolean editable  = PermissionService.permissionMatches(Permission.PERM_ADMIN_EDIT,
+			                                                        project,
+			                                                        data.getPermissions());
+			boolean deletable = PermissionService.permissionMatches(Permission.PERM_SYSADMIN_DELETE,
+			                                                        project,
+			                                                        data.getPermissions());
+			project.setEditable(editable);
+			project.setDeletable(deletable);
+
+			if (canViewHiddenProjects) {
+				canViewHiddenProjects = PermissionService.permissionMatches(Permission.PERM_HIDE_PROJECT,
+				                                                            project,
+				                                                            data.getPermissions());
+			}
+		}
 
 		log.info("Found " + projects.size() + " projects");
 		model.addAttribute("projects", projects);
+		model.addAttribute("canViewHiddenProjects", canViewHiddenProjects);
 
 		return ThymeLeafTemplate.PROJECTS.pageName;
 	}
