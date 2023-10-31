@@ -70,7 +70,7 @@ public class PersonRole implements java.io.Serializable {
 	
 	@Transient
 	public int getProjectId() {
-		return this.getProjectId();
+		return id.getProjectId();
 	}
 
 }
