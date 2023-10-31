@@ -21,25 +21,22 @@ package xplanner.controller;
 
 import com.technoetic.xplanner.security.AuthenticationException;
 import com.technoetic.xplanner.security.SecurityHelper;
-import com.technoetic.xplanner.security.auth.Authorizer;
 import net.sf.xplanner.domain.Project;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import xplanner.ThymeLeafTemplate;
 import xplanner.repository.ProjectRepository;
 import xplanner.sql.Order;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.List;
 import java.util.Locale;
 
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
 @RequestMapping("/projects")
@@ -47,7 +44,6 @@ public class ProjectController extends BaseController {
 	public static final Logger log = Logger.getLogger(ProjectController.class);
 
 	private @Autowired ProjectRepository projectRepository;
-	private @Autowired Authorizer authorizer;
 
 	@RequestMapping(method = GET)
 	public String doViewProjects(HttpServletRequest request,
@@ -55,28 +51,12 @@ public class ProjectController extends BaseController {
 	                             Locale locale) throws AuthenticationException {
 		defaultModelAttributes(model, request, locale);
 
-		List<Project> projects = projectRepository.findAll(new Order(Order.Direction.ASC, "hidden", "name"));
-
-
-		// todo Refactor this to a security helper class
-		final HttpServletRequest r = request;
-		CollectionUtils.filter(projects, new Predicate() {
-			public boolean evaluate(Object o) {
-				try {
-					Project project = (Project)o;
-					return authorizer.hasPermission(project.getId(),
-					                                SecurityHelper.getRemoteUserId(r),
-					                                project,
-					                                "read");
-				} catch (AuthenticationException e) {
-					return false;
-				}
-			}
-		});
+		List<Project> projects = projectRepository.findAll(new Order(Order.Direction.ASC, "hidden", "name"),
+		                                                   SecurityHelper.getRemoteUserId(request));
 
 		log.info("Found " + projects.size() + " projects");
+		model.addAttribute("projects", projects);
 
-		/* return ThymeLeafTemplate.PROJECTS.pageName; */
-		return "view/projects";
+		return ThymeLeafTemplate.PROJECTS.pageName;
 	}
 }

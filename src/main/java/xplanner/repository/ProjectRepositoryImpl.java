@@ -19,18 +19,23 @@
 
 package xplanner.repository;
 
-import net.sf.xplanner.domain.Person;
-import net.sf.xplanner.domain.Project;
+import com.technoetic.xplanner.security.auth.Authorizer;
+import net.sf.xplanner.domain.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import xplanner.repository.command.FindAllByCommand;
-import xplanner.repository.command.FindByCommand;
+import xplanner.repository.command.*;
+import xplanner.sql.Order;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Component("projectRepository")
 public class ProjectRepositoryImpl extends BaseRepository<Project, Integer> implements ProjectRepository {
+	private @Autowired PersonRoleRepository personRoleRepository;
+	private @Autowired RoleRepository roleRepository2;
+
 	protected ProjectRepositoryImpl() {
 		super(Project.class);
 	}
@@ -40,5 +45,29 @@ public class ProjectRepositoryImpl extends BaseRepository<Project, Integer> impl
 		parameters.put("hidden", hidden);
 
 		return execute(new FindAllByCommand<>(parameters, null, Project.class, true));
+	}
+
+	@Override
+	public List<Project> findAll(Order order, final int userId) {
+		List<Integer> projectIds = new ArrayList<>();
+		List<Integer> roleIds = new ArrayList<>();
+
+		List<PersonRole> personRoles = personRoleRepository.findAllByUserId(userId);
+
+		for (PersonRole personRole : personRoles) {
+			projectIds.add(personRole.getProjectId());
+			roleIds.add(personRole.getRoleId());
+		}
+
+		List<Role> roles = roleRepository2.findAllById(roleIds, null);
+
+		if (roles.size() == 1
+				&& personRoles.size() == 1
+				&& roles.get(0).getName().equals(Role.SYSADMIN)
+				&& personRoles.get(0).getProjectId() == 0) {
+			return super.findAll(order);
+		}
+
+		return super.findAllById(projectIds, order);
 	}
 }

@@ -113,5 +113,4 @@ public class Project extends NamedObject implements java.io.Serializable, NoteAt
 	public Map<String,String> getAttributes() {
 		return super.getAttributes();
 	}
-
 }

@@ -20,9 +20,11 @@
 package xplanner.repository;
 
 import net.sf.xplanner.domain.Project;
+import xplanner.sql.Order;
 
 import java.util.List;
 
 public interface ProjectRepository extends Repository<Project, Integer> {
 	List<Project> findProjectsByHidden(boolean hidden);
+	List<Project> findAll(Order order, int userId);
 }

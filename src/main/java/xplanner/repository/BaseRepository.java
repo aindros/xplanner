@@ -19,12 +19,13 @@
 
 package xplanner.repository;
 
-import xplanner.repository.command.FindAllByCommand;
-import xplanner.repository.command.FindByCommand;
-import xplanner.repository.command.SessionCommandExecutor;
+import xplanner.repository.command.*;
 import xplanner.sql.Order;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class BaseRepository<T, K> extends SessionCommandExecutor implements Repository<T, K> {
 	protected final Class<T> domainClass;
@@ -46,5 +47,23 @@ public abstract class BaseRepository<T, K> extends SessionCommandExecutor implem
 	@Override
 	public List<T> findAll(Order order) {
 		return execute(new FindAllByCommand<>(null, order, domainClass, false));
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<T> findAllById(Collection<K> ids, Order order) {
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("id", ids);
+
+		String hql = "from " + getDomainName() + " where id in (:id)";
+
+		if (order != null)
+			hql += " " + order.toSql();
+
+		return (List<T>) execute(new HQLCommand<>(hql, parameters));
+	}
+
+	protected String getDomainName() {
+		return domainClass.getName();
 	}
 }

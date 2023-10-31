@@ -21,9 +21,11 @@ package xplanner.repository;
 
 import xplanner.sql.Order;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface Repository<T, K> {
+	List<T> findAllById(Collection<K> ids, Order order);
 	T findById(K id);
 	T findById(K id, boolean cachable);
 	List<T> findAll(Order order);
