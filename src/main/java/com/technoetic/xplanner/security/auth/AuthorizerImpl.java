@@ -29,32 +29,14 @@ import com.technoetic.xplanner.forms.ProjectEditorForm;
 import com.technoetic.xplanner.forms.TaskEditorForm;
 import com.technoetic.xplanner.forms.UserStoryEditorForm;
 import com.technoetic.xplanner.security.AuthenticationException;
+import xplanner.util.DomainUtils;
 
 
 public class AuthorizerImpl implements Authorizer {
-   private final Map<Class,String> resourceTypes = new HashMap<Class,String>();
    private AuthorizerQueryHelper authorizerQueryHelper;
    private PrincipalSpecificPermissionHelper principalSpecificPermissionHelper;
 
    public AuthorizerImpl() {
-      //TODO: Extract these constants
-      //DEBT(METADATA) Move these to the DomainMetaDataRepository
-      resourceTypes.put(Project.class, "system.project");
-      resourceTypes.put(Iteration.class, "system.project.iteration");
-      resourceTypes.put(UserStory.class, "system.project.iteration.story");
-      resourceTypes.put(Task.class, "system.project.iteration.story.task");
-      resourceTypes.put(Feature.class, "system.project.iteration.story.feature");
-      resourceTypes.put(TimeEntry.class, "system.project.iteration.story.task.time_entry");
-      resourceTypes.put(Integration.class, "system.project.integration");
-      resourceTypes.put(Person.class, "system.person");
-      resourceTypes.put(Note.class, "system.note");
-      resourceTypes.put(ProjectEditorForm.class, "system.project");
-      resourceTypes.put(IterationEditorForm.class, "system.project.iteration");
-      resourceTypes.put(UserStoryEditorForm.class, "system.project.iteration.story");
-      resourceTypes.put(TaskEditorForm.class, "system.project.iteration.story.task");
-      resourceTypes.put(FeatureEditorForm.class, "system.project.iteration.story.feature");
-      resourceTypes.put(PersonEditorForm.class, "system.person");
-      resourceTypes.put(Setting.class, "system.setting");
    }
 
    //TODO resource should be a DomainObject
@@ -66,7 +48,7 @@ public class AuthorizerImpl implements Authorizer {
       } catch (Exception e) {
          throw new AuthenticationException(e);
       }
-      return hasPermission(projectId, personId, getTypeOfResource(resource), id, permission);
+      return hasPermission(projectId, personId, DomainUtils.getTypeOfResource(resource), id, permission);
    }
 
 
@@ -140,16 +122,6 @@ public class AuthorizerImpl implements Authorizer {
          }
       }
       return false;
-   }
-
-   public String getTypeOfResource(Object resource) {
-	   String keyClass = resource.getClass().getName();
-	   for (Object clazz : resourceTypes.keySet()) {
-		   	if (keyClass.startsWith(((Class) clazz).getName())) {
-	   			return (String) resourceTypes.get(clazz);
-	   		}
-   		}
-	   return null;
    }
 
    public void setPrincipalSpecificPermissionHelper(PrincipalSpecificPermissionHelper principalSpecificPermissionHelper) {
