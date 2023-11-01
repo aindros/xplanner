@@ -42,6 +42,7 @@
 					        th:classappend="${project.editable? 'btn-primary' : 'btn-secondary disabled'}"
 					        role="button"
 					        th:aria-disabled="${!project.editable}"
+					        th:href="@{/do/edit/project(returnto=${requestURL},oid=${project.id})}"
 					        th:title="#{action.edit.project}">
 						<i class="bi bi-pencil-square"></i>
 					</a>
@@ -50,6 +51,7 @@
 					        th:classappend="${project.deletable? 'btn-primary' : 'btn-secondary disabled'}"
 					        role="button"
 					        th:aria-disabled="${!project.deletable}"
+					        th:href="@{/do/delete/project(returnto=${requestURL},oid=${project.id})}"
 					        th:title="#{action.delete.project}">
 						<i class="bi bi-trash"></i>
 					</a>
