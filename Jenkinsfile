@@ -14,6 +14,7 @@ pipeline {
         stage('Pacakge') {
             steps {
                 script {
+                    sh 'make update-revision'
                     sh 'mvn package -DskipTests=true'
                 }
             }

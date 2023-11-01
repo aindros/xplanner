@@ -28,6 +28,9 @@ release: ${WARPACKAGE} ${SRCPACKAGE}
 update-version:
 	@scripts/update-version.sh
 
+update-revision:
+	@scripts/update-version.sh --revision
+
 tag-release: update-version
 	@git add pom.xml
 	@git add src/main/resources/xplanner.properties
