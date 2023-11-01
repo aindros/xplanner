@@ -62,7 +62,8 @@ public abstract class BaseController {
 
 	protected void defaultModelAttributes(HttpServletRequest request,
 	                                      Model model,
-	                                      Locale locale, ControllerData data)
+	                                      Locale locale,
+	                                      ControllerData data)
 			throws AuthenticationException {
 		String requestURL = request.getRequestURL().toString();
 		String footerMessage = messageSource.getMessage("footer.message", new String[] {"/xplanner/do/systemInfo"}, "", locale);
