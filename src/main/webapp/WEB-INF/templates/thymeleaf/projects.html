@@ -57,7 +57,7 @@
 				<td><a th:href="@{/do/view/project(returnto=${requestURL},oid=${project.id})}" th:text="${project.name}"></a></td>
 				<td></td>
 				<td th:if="${canViewHiddenProjects}">
-					<i th:if="${project.hidden}" class="bi bi-check2 fs-2"></i>
+					<i th:if="${project.hidden}" class="bi bi-check2 fs-4"></i>
 				</td>
 			</tr>
 			</tbody>
