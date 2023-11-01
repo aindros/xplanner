@@ -66,8 +66,6 @@ public class ProjectController extends BaseController {
 	public String doViewProjects(final HttpServletRequest request,
 	                             Model model,
 	                             Locale locale) throws AuthenticationException {
-
-
 		ControllerData data = new ControllerData();
 
 		defaultModelAttributes(request, model, locale, data);
