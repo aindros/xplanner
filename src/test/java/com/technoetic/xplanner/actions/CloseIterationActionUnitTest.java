@@ -40,8 +40,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-//public class TestCloseIterationAction extends AbstractIterationStatusTestCase {
-public class TestCloseIterationAction extends UnitTestEnvironment {
+public class CloseIterationActionUnitTest extends UnitTestEnvironment {
 	private static final int ITERATION_ID = 1;
 
 	private CloseIterationAction action;
