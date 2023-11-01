@@ -25,7 +25,7 @@ ${SRCPACKAGE}:
 release: ${WARPACKAGE} ${SRCPACKAGE}
 	@cp ${WARPACKAGE} target/${APPNAME}-${VERSION_POM}.war
 
-update-version:
+tag-release:
 	@scripts/update-version.sh
 
 deploy: ${WARPACKAGE}
