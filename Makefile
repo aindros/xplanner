@@ -25,8 +25,10 @@ ${SRCPACKAGE}:
 release: ${WARPACKAGE} ${SRCPACKAGE}
 	@cp ${WARPACKAGE} target/${APPNAME}-${VERSION_POM}.war
 
-tag-release:
+update-version:
 	@scripts/update-version.sh
+
+tag-release: update-version
 	@git add pom.xml
 	@git add src/main/resources/xplanner.properties
 	@git commit -m "${APPNAME} ${VERSION_POM}"
