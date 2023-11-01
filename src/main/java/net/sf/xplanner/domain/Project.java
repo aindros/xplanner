@@ -2,6 +2,7 @@ package net.sf.xplanner.domain;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +56,7 @@ public class Project extends NamedObject implements java.io.Serializable, NoteAt
 	private Iteration backlog;
     private List<Iteration> iterations = new ArrayList<Iteration>();
 	private List<Person> notificationReceivers;
+	private Iteration currentIteration;
 
 	private @Transient boolean editable  = true;
 	private @Transient boolean deletable = true;
@@ -100,10 +102,15 @@ public class Project extends NamedObject implements java.io.Serializable, NoteAt
 		this.backlog = backlog;
 	}
 
+
 	@Transient
-	@Deprecated
+	public void setCurrentIteration(Iteration iteration) {
+		currentIteration = iteration;
+	}
+
+	@Transient
     public Iteration getCurrentIteration() {
-        return IterationRepository.getCurrentIteration(getId());
+		return currentIteration;
     }
 
     @Transient

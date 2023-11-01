@@ -57,7 +57,11 @@
 					</a>
 				<th><a th:href="@{/do/view/project(returnto=${requestURL},oid=${project.id})}" th:text="${project.id}"></a></th>
 				<td><a th:href="@{/do/view/project(returnto=${requestURL},oid=${project.id})}" th:text="${project.name}"></a></td>
-				<td></td>
+				<td>
+					<a th:if="${project.currentIteration != null}"
+					        th:href="@{/do/view/iteration(returnto=${requestURL},oid=${project.currentIteration.id})}"
+					        th:text="${project.currentIteration.name}"></a>
+				</td>
 				<td th:if="${canViewHiddenProjects}">
 					<i th:if="${project.hidden}" class="bi bi-check2 fs-4"></i>
 				</td>

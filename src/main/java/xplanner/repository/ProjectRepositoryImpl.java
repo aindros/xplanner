@@ -36,6 +36,7 @@ import java.util.Map;
 
 @Component("projectRepository")
 public class ProjectRepositoryImpl extends BaseRepository<Project, Integer> implements ProjectRepository {
+	private @Autowired IterationRepository iterationRepository;
 	private @Autowired PersonRoleRepository personRoleRepository;
 	private @Autowired RoleRepository roleRepository2;
 	protected @Autowired PrincipalSpecificPermissionHelper principalSpecificPermissionHelper;
@@ -64,19 +65,30 @@ public class ProjectRepositoryImpl extends BaseRepository<Project, Integer> impl
 		}
 
 		List<Role> roles = roleRepository2.findAllById(roleIds, null);
+		boolean sysadmin = false;
 		for (Role role : roles) {
 			if (role.getName().equals(Role.SYSADMIN)) {
-				return super.findAll(order);
+				sysadmin = true;
+				break;
 			}
 		}
 
-		List<Project> projects = super.findAllById(projectIds, order);
-		CollectionUtils.filter(projects, new Predicate() {
-			@Override
-			public boolean evaluate(Object object) {
-				return !((Project) object).isHidden();
-			}
-		});
+		List<Project> projects;
+		if (sysadmin) {
+			projects = super.findAll(order);
+		} else {
+			projects = super.findAllById(projectIds, order);
+			CollectionUtils.filter(projects, new Predicate() {
+				@Override
+				public boolean evaluate(Object object) {
+					return !((Project) object).isHidden();
+				}
+			});
+		}
+
+		for (Project project : projects) {
+			project.setCurrentIteration(iterationRepository.findByProjectId(project.getId()));
+		}
 
 		return projects;
 	}
