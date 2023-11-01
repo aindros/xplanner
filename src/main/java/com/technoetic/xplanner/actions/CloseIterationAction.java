@@ -31,7 +31,7 @@ public class CloseIterationAction extends AbstractIterationAction<Iteration> {
 			ActionForm actionForm, HttpServletRequest request, HttpServletResponse reply) throws Exception {
 		closeIteration(request, iteration);
 		String event = History.ITERATION_CLOSED;
-		historySupport.saveEvent(iteration, event, null, SecurityHelper.getRemoteUserId(request),
+		historySupport.saveEvent(iteration, event, null, getRemoteUserId(request),
 				timeGenerator.getCurrentTime());
 	}
 

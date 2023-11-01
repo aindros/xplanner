@@ -66,6 +66,10 @@ public abstract class AbstractAction<T extends Identifiable> extends Action {
 			domainClass = null; //(Class<T>) ((TypeVariable) object).getClass();
 		}
 	}
+
+	public int getRemoteUserId(HttpServletRequest request) throws AuthenticationException {
+		return SecurityHelper.getRemoteUserId(request);
+	}
 	
 	@Override
 	public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,

@@ -2,6 +2,7 @@ package com.technoetic.xplanner.forms;
 
 import javax.servlet.ServletRequest;
 
+import lombok.NoArgsConstructor;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
@@ -10,12 +11,17 @@ import org.apache.struts.action.ActionMapping;
  * Date: Jan 10, 2005
  * Time: 3:05:49 PM
  */
+@NoArgsConstructor
 public class IterationStatusEditorForm extends ActionForm{
     private String operation;
     private String oid;
     public static final String SAVE_TIME_ATTR = "saveTime";
     private boolean closeIterations;
     private boolean iterationStartConfirmed;
+
+	public IterationStatusEditorForm(String oid) {
+		this.oid = oid;
+	}
 
    public String getOperation() {
         return operation;

@@ -1,50 +1,92 @@
-/*
- * Copyright (c) 2005 Your Corporation. All Rights Reserved.
+/*-
+ * XPlanner is a software to keep track of your working activities
+ * Copyright (C) 2021, 2023  Alessandro Iezzi <aiezzi AT alessandroiezzi PERIOD it>
+ *
+ * XPlanner is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * XPlanner is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with XPlanner.  If not, see <https://www.gnu.org/licenses/>.
+ * package xplanner.controller;
  */
 
-/*
- * Created by IntelliJ IDEA.
- * User: Jacques
- * Date: Dec 23, 2005
- * Time: 12:02:43 PM
- */
 package com.technoetic.xplanner.actions;
 
-import static org.easymock.EasyMock.expect;
-
-import java.util.Date;
-
-import net.sf.xplanner.domain.History;
-
+import com.technoetic.xplanner.charts.DataSampler;
 import com.technoetic.xplanner.domain.IterationStatus;
+import com.technoetic.xplanner.forms.IterationStatusEditorForm;
+import com.technoetic.xplanner.history.HistorySupport;
+import com.technoetic.xplanner.security.AuthenticationException;
+import com.technoetic.xplanner.tx.CheckedExceptionHandlingTransactionTemplateMock;
 import com.technoetic.xplanner.util.TimeGenerator;
+import net.sf.xplanner.dao.impl.CommonDao;
+import net.sf.xplanner.domain.Iteration;
+import org.apache.struts.action.ActionForm;
+import org.junit.Before;
+import org.junit.Test;
+import xplanner.env.UnitTestEnvironment;
 
-public class TestCloseIterationAction extends AbstractIterationStatusTestCase {
-   private TimeGenerator mockTimeGenerator;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.List;
 
-   public void setUp() throws Exception {
-      action = new CloseIterationAction();
-      super.setUp();
-      mockTimeGenerator = createLocalMock(TimeGenerator.class);
-      ((CloseIterationAction) action).setTimeGenerator(mockTimeGenerator);
-   }
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
-   public void testExecute() throws Exception
-   {
-      iteration.setIterationStatus(IterationStatus.ACTIVE);
-      mockDataSampler.generateClosingDataSamples(iteration);
-      Date date = new Date();
-      expect(mockTimeGenerator.getCurrentTime()).andReturn(date);
-      event.setAction(History.ITERATION_CLOSED);
-      event.setWhenHappened(date);
-      expect(mockSession.save(event)).andReturn(null);
-      support.setForward("onclose", "/continue/unfinished/stories");
+//public class TestCloseIterationAction extends AbstractIterationStatusTestCase {
+public class TestCloseIterationAction extends UnitTestEnvironment {
+	private static final int ITERATION_ID = 1;
 
-      replay();
+	private CloseIterationAction action;
+	private CommonDao<Iteration> commonDao;
 
-      support.executeAction(action);
-      assertEquals("wrong iteration status", IterationStatus.INACTIVE_KEY, iteration.getStatusKey());
-   }
+	@Before
+	@SuppressWarnings("unchecked")
+	public void setUp() throws AuthenticationException {
+		commonDao = mock(CommonDao.class);
+		TimeGenerator timeGenerator = mock(TimeGenerator.class);
 
+		action = spy(new CloseIterationAction());
+		action.setTransactionTemplate(new CheckedExceptionHandlingTransactionTemplateMock());
+		action.setCommonDao(commonDao);
+		action.setDataSampler(mock(DataSampler.class));
+		action.setHistorySupport(mock(HistorySupport.class));
+		action.setTimeGenerator(timeGenerator);
 
+		doReturn(0).when(action).getRemoteUserId(any(HttpServletRequest.class));
+	}
+
+	@Override
+	protected ActionForm getSupportFrom() {
+		return new IterationStatusEditorForm(String.valueOf(ITERATION_ID));
+	}
+
+	@Override
+	protected List<Forward> getForwards() {
+		return Arrays.asList(
+				new Forward(AbstractAction.TYPE_KEY, Iteration.class.getName()),
+				new Forward("view/projects",         "projects.jsp"),
+				new Forward("onclose",               "/do/continue/unfinished/stories")
+		);
+	}
+
+	@Test
+	public void onActiveIteration_testExecute_thenGetInactiveIteration() throws Exception {
+		Iteration iteration = new Iteration();
+		iteration.setId(ITERATION_ID);
+		iteration.setIterationStatus(IterationStatus.ACTIVE);
+
+		doReturn(iteration).when(commonDao).getById(Iteration.class, iteration.getId());
+
+		support.executeAction(action);
+
+		assertEquals("wrong iteration status", IterationStatus.INACTIVE_KEY, iteration.getStatusKey());
+	}
 }
