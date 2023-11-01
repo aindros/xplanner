@@ -27,6 +27,10 @@ release: ${WARPACKAGE} ${SRCPACKAGE}
 
 tag-release:
 	@scripts/update-version.sh
+	@git add pom.xml
+	@git add src/main/resources/xplanner.properties
+	@git commit -m "${APPNAME} ${VERSION_POM}"
+	@git tag v${VERSION_POM}
 
 deploy: ${WARPACKAGE}
 	cp ${WARPACKAGE} ${CATALINA_HOME}/webapps
