@@ -43,7 +43,7 @@ import java.util.Map;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
-@RequestMapping("/projects")
+@RequestMapping(BaseController.PROJECTS_URL)
 public class ProjectController extends BaseController {
 	public static final Logger log = Logger.getLogger(ProjectController.class);
 

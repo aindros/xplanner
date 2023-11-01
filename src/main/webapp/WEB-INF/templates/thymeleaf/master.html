@@ -106,7 +106,7 @@
 		<div class="px-3 py-2 border-bottom mb-3">
 			<div class="container justify-content-center">
 				<div class="row justify-content-between">
-					<div class="col-4">
+					<div class="col-6">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb pt-2" style="margin-bottom: 0px">
 								<li class="breadcrumb-item">
@@ -115,11 +115,16 @@
 										<span class="visually-hidden">Home</span>
 									</a>
 								</li>
-								<li class="breadcrumb-item">
-									<a class="link-body-emphasis fw-semibold text-decoration-none" href="#">Library</a>
-								</li>
-								<li class="breadcrumb-item active" aria-current="page">
-									Data
+
+								<li class="breadcrumb-item" th:each="breadCrumb: ${breadCrumbs}"
+								        th:classappend="${breadCrumb.currentPage? 'active' : ''}">
+									<a class="link-body-emphasis fw-semibold text-decoration-none"
+									        th:if="${!breadCrumb.currentPage}"
+									        th:href="${breadCrumb.link}"
+									        th:text="${breadCrumb.label}"
+									        th:attr="aria-current=${breadCrumb.currentPage}?page">BreadCrumb</a>
+									<span th:if="${breadCrumb.currentPage}"
+									        th:text="${breadCrumb.label}" th:remove="tag"></span>
 								</li>
 							</ol>
 						</nav>

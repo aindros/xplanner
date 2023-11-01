@@ -45,6 +45,17 @@ public abstract class BaseController {
 	protected @Autowired MessageSource messageSource;
 	protected @Autowired PrincipalSpecificPermissionHelper principalSpecificPermissionHelper;
 
+	private static final Map<Class<?>, String> CONTEXT_URLS = new HashMap<>();
+	public static final String PROJECTS_URL = "/projects";
+
+	static {
+		CONTEXT_URLS.put(Project.class, PROJECTS_URL);
+	}
+
+	public static String getContextUrl(Class<?> resourceClass) {
+		return CONTEXT_URLS.get(resourceClass);
+	}
+
 	protected Map<Integer, List<Permission>> getPermissions(HttpServletRequest request) throws AuthenticationException {
 		return principalSpecificPermissionHelper.getPermissionsForPrincipal(SecurityHelper.getRemoteUserId(request));
 	}
