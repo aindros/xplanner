@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import com.technoetic.xplanner.Command;
+import xplanner.controller.BaseController;
 
 /**
  * User: mprokopowicz
@@ -36,6 +37,6 @@ public class CommandExecutorAction extends Action {
       if (returnto != null) {
          return new ActionForward(returnto, true);
       }
-      return mapping.findForward("view/projects");
+      return new ActionForward(BaseController.PROJECTS_URL, true);
    }
 }

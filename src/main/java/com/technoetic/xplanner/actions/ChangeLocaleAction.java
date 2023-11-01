@@ -12,6 +12,7 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import xplanner.controller.BaseController;
 
 /**
  * User: Mateusz Prokopowicz
@@ -34,7 +35,7 @@ public class ChangeLocaleAction extends Action {
       HttpSession session = request.getSession();
       session.setAttribute(Globals.LOCALE_KEY, locale);
       if (StringUtils.isEmpty(returnto)) {
-         return mapping.findForward("view/projects");
+         return new ActionForward(BaseController.PROJECTS_URL, true);
       } else {
          return new ActionForward(returnto, true);
       }

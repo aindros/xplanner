@@ -28,6 +28,7 @@ import org.apache.struts.taglib.TagUtils;
 import org.apache.struts.util.RequestUtils;
 import org.apache.struts.util.ResponseUtils;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import xplanner.controller.BaseController;
 
 public class LinkTag extends org.apache.struts.taglib.html.LinkTag {
     private Logger log = Logger.getLogger(getClass());
@@ -126,7 +127,7 @@ public class LinkTag extends org.apache.struts.taglib.html.LinkTag {
         if (useReturnto){
           returnToUri = request.getParameter("returnto");
           if (returnToUri == null)
-             returnToUri = "/do/view/projects";
+             returnToUri = BaseController.PROJECTS_URL;
         }
         else
         {

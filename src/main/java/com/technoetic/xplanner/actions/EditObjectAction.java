@@ -26,6 +26,7 @@ import com.technoetic.xplanner.domain.RelationshipConvertor;
 import com.technoetic.xplanner.domain.RelationshipMappingRegistry;
 import com.technoetic.xplanner.forms.AbstractEditorForm;
 import com.technoetic.xplanner.util.LogUtil;
+import xplanner.controller.BaseController;
 
 public class EditObjectAction<T extends Identifiable> extends AbstractAction<T> {
 	protected static final Logger log = LogUtil.getLogger();
@@ -43,8 +44,8 @@ public class EditObjectAction<T extends Identifiable> extends AbstractAction<T> 
 			saveForm(form, actionMapping, request);
 			setCookies(form, actionMapping, request, reply);
 			String returnto = request.getParameter(RETURNTO_PARAM);
-			return returnto != null ? new ActionForward(returnto, true) : actionMapping
-					.findForward("view/projects");
+
+			return returnto != null ? new ActionForward(returnto, true) : new ActionForward(BaseController.PROJECTS_URL, true);
 		} else {
 			populateForm(form, actionMapping, request);
 			return new ActionForward(actionMapping.getInput());

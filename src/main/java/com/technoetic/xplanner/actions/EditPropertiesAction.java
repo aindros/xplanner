@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import com.technoetic.xplanner.XPlannerProperties;
+import xplanner.controller.BaseController;
 
 /**
  * Created by IntelliJ IDEA.
@@ -39,7 +40,7 @@ public class EditPropertiesAction extends Action {
       if (returnTo != null) {
          return new ActionForward(returnTo, true);
       } else {
-         return mapping.findForward("view/projects");
+         return new ActionForward(BaseController.PROJECTS_URL, true);
       }
    }
 

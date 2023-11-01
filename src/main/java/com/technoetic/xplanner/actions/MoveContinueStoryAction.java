@@ -21,6 +21,7 @@ import com.technoetic.xplanner.domain.RelationshipConvertor;
 import com.technoetic.xplanner.domain.RelationshipMappingRegistry;
 import com.technoetic.xplanner.domain.repository.RepositoryException;
 import com.technoetic.xplanner.forms.MoveContinueStoryForm;
+import xplanner.controller.BaseController;
 
 public class MoveContinueStoryAction extends EditObjectAction {
 	public static final String CONTINUE_ACTION = "Continue";
@@ -43,7 +44,7 @@ public class MoveContinueStoryAction extends EditObjectAction {
 			if (returnto != null) {
 				return new ActionForward(returnto, true);
 			} else {
-				return actionMapping.findForward("view/projects");
+				return new ActionForward(BaseController.PROJECTS_URL, true);
 			}
 		} else {
 			populateForm(storyForm, session);

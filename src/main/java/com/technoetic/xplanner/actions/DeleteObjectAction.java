@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionMapping;
 
 import com.technoetic.xplanner.domain.Identifiable;
 import com.technoetic.xplanner.domain.repository.ObjectRepository;
+import xplanner.controller.BaseController;
 
 public class DeleteObjectAction<T extends Identifiable> extends AbstractAction<T> {
     public ActionForward doExecute(ActionMapping actionMapping, ActionForm form,
@@ -25,6 +26,6 @@ public class DeleteObjectAction<T extends Identifiable> extends AbstractAction<T
         String returnto = request.getParameter("returnto");
         return returnto != null ?
                 new ActionForward(returnto, true)
-                : actionMapping.findForward("view/projects");
+                : new ActionForward(BaseController.PROJECTS_URL, true);
     }
 }

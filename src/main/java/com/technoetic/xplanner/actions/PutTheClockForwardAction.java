@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import com.technoetic.xplanner.util.TimeGenerator;
+import xplanner.controller.BaseController;
 
 public class PutTheClockForwardAction extends Action {
    public static final Logger LOG = Logger.getLogger(PutTheClockForwardAction.class);
@@ -46,6 +47,6 @@ public class PutTheClockForwardAction extends Action {
       if (returnto != null) {
          return new ActionForward(returnto, true);
       }
-      return mapping.findForward("view/projects");
+      return new ActionForward(BaseController.PROJECTS_URL, true);
    }
 }

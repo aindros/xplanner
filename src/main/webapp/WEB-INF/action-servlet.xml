@@ -15,10 +15,6 @@
 		<property name="authorizationRequired" value="false" />
 	</bean>
 
-	<bean name="/view/projects" class="com.technoetic.xplanner.actions.DispatchForward">
-		<property name="authorizationRequired" value="false" />
-	</bean>
-
 	<bean name="/view/project" class="com.technoetic.xplanner.actions.ViewObjectAction">
 		<property name="type">
 			<value>net.sf.xplanner.domain.Project</value>

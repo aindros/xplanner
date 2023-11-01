@@ -85,7 +85,6 @@
 		========== Global Forward Definitions ==============================
 	-->
 	<global-forwards type="org.apache.struts.action.ActionForward">
-		<forward name="view/projects" path="/WEB-INF/jsp/view/projects.jsp" />
 		<forward name="view/project" path="/WEB-INF/jsp/view/project.jsp" />
 		<forward name="view/project/features" path="/WEB-INF/jsp/view/iterationFeatures.jsp" />
 		<forward name="view/iterationTabs" path="/WEB-INF/jsp/view/iteration.jsp" />
@@ -156,8 +155,6 @@
 		<action path="/notAuthorized" parameter="security/notAuthorized" />
 
 		<action path="/view/twikiformat" parameter="view/twikiformat" />
-
-		<action path="/view/projects" parameter="view/projects" />
 		
 		<action path="/view/project">
 			<forward name="display" path="/WEB-INF/jsp/view/project.jsp" />

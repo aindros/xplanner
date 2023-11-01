@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionMapping;
 import com.technoetic.xplanner.db.NoteHelper;
 import com.technoetic.xplanner.db.hibernate.ThreadSession;
 import com.technoetic.xplanner.domain.repository.ObjectRepository;
+import xplanner.controller.BaseController;
 
 /**
  * Created by IntelliJ IDEA.
@@ -32,7 +33,7 @@ public class DeleteNoteAction extends DeleteObjectAction<Note> {
         String returnto = request.getParameter("returnto");
         return returnto != null ?
                new ActionForward(returnto, true)
-               : actionMapping.findForward("view/projects");
+               : new ActionForward(BaseController.PROJECTS_URL, true);
     }
 
 

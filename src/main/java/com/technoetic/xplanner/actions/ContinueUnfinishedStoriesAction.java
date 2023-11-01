@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Required;
 
 import com.technoetic.xplanner.domain.IterationStatus;
 import com.technoetic.xplanner.forms.ContinueUnfinishedStoriesForm;
+import xplanner.controller.BaseController;
 
 public class ContinueUnfinishedStoriesAction extends EditObjectAction<UserStory> {
    public static final String OK_ACTION = "Ok";
@@ -44,7 +45,7 @@ protected ActionForward doExecute(ActionMapping mapping,
             if (returnto != null) {
                return new ActionForward(returnto, true);
             } else {
-               return mapping.findForward("view/projects");
+               return new ActionForward(BaseController.PROJECTS_URL, true);
             }
          } else {
             populateForm(continueUnfinishedStoriesForm, session);

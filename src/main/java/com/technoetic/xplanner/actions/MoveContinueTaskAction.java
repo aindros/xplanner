@@ -28,6 +28,7 @@ import com.technoetic.xplanner.domain.TaskDisposition;
 import com.technoetic.xplanner.forms.MoveContinueTaskForm;
 import com.technoetic.xplanner.history.HistorySupport;
 import com.technoetic.xplanner.security.SecurityHelper;
+import xplanner.controller.BaseController;
 
 public class MoveContinueTaskAction extends EditObjectAction<Task> {
     private final Logger log = Logger.getLogger(getClass());
@@ -60,7 +61,7 @@ public class MoveContinueTaskAction extends EditObjectAction<Task> {
 		if (returnto != null) {
 		    return new ActionForward(returnto, true);
 		} else {
-		    return actionMapping.findForward("view/projects");
+		    return new ActionForward(BaseController.PROJECTS_URL, true);
 		}
 	    } else {
 		populateForm(taskForm, session);

@@ -26,6 +26,7 @@ import com.technoetic.xplanner.history.HistorySupport;
 import com.technoetic.xplanner.security.SecurityHelper;
 import com.technoetic.xplanner.util.RequestUtils;
 import com.technoetic.xplanner.util.TimeGenerator;
+import xplanner.controller.BaseController;
 
 public class StartIterationAction extends AbstractIterationAction<Iteration> {
 	private TimeGenerator timeGenerator;
@@ -75,8 +76,7 @@ public class StartIterationAction extends AbstractIterationAction<Iteration> {
 					getCommonDao().save(iteration);
 					setTargetObject(request, iteration);
 					String returnto = request.getParameter(EditObjectAction.RETURNTO_PARAM);
-					nextPage = returnto != null ? new ActionForward(returnto, true) : mapping
-							.findForward("view/projects");
+					nextPage = returnto != null ? new ActionForward(returnto, true) : new ActionForward(BaseController.PROJECTS_URL, true);
 				}
 			}
 		} else {
@@ -98,7 +98,7 @@ public class StartIterationAction extends AbstractIterationAction<Iteration> {
 				nextPage = mapping.findForward("edit/time");
 			} else {
 				String returnto = request.getParameter(EditObjectAction.RETURNTO_PARAM);
-				nextPage = returnto != null ? new ActionForward(returnto, true) : mapping.findForward("view/projects");
+				nextPage = returnto != null ? new ActionForward(returnto, true) : new ActionForward(BaseController.PROJECTS_URL, true);
 			}
 		}
 		return nextPage;
