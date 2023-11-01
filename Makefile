@@ -22,7 +22,7 @@ ${SRCPACKAGE}:
 	@cp -r scripts      target/sources/
 	@tar cfvz $@ -C target/sources/ .
 
-release: update-version ${WARPACKAGE} ${SRCPACKAGE}
+release: ${WARPACKAGE} ${SRCPACKAGE}
 	@cp ${WARPACKAGE} target/${APPNAME}-${VERSION_POM}.war
 
 update-version:
