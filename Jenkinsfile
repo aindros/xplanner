@@ -16,7 +16,7 @@ pipeline {
         stage('Pacakge') {
             steps {
                 script {
-                    sh 'scripts/update-revision --revision-number ${buildNumber}'
+                    sh 'scripts/update-revision.sh --revision-number ${buildNumber}'
                     sh 'mvn package -DskipTests=true'
                 }
             }
