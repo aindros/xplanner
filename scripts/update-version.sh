@@ -14,6 +14,11 @@ if [ $# -gt 0 ]; then
 		--revision)
 			UPDATE_REVISION=1
 			;;
+		--revision-number)
+			shift
+			UPDATE_REVISION=1
+			BUILD_REV=$1
+			;;
 	esac
 else
 	UPDATE_VERSION=1

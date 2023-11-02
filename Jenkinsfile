@@ -1,3 +1,5 @@
+def buildNumber = currentBuild.number
+
 pipeline {
     agent any
 
@@ -14,7 +16,7 @@ pipeline {
         stage('Pacakge') {
             steps {
                 script {
-                    sh 'make update-revision'
+                    sh 'scripts/update-revision --revision-number ${buildNumber}'
                     sh 'mvn package -DskipTests=true'
                 }
             }
