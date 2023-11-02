@@ -4,6 +4,8 @@
 
 package com.technoetic.xplanner;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -63,7 +65,20 @@ public class XPlannerProperties {
          Properties customProperties = new Properties();
          try {
             String customPropertyFileName = System.getProperty(OVERRIDES_KEY, OVERRIDES_DEFAULT);
-		InputStream is = XPlannerProperties.class.getClassLoader().getResourceAsStream(customPropertyFileName);
+
+			/* Check first in Tomcat conf directory */
+			File configDir = new File(System.getProperty("catalina.base"), "conf");
+			File configFile = new File(configDir, customPropertyFileName);
+
+			InputStream is = null;
+			if (configFile.exists()) {
+				is = new FileInputStream(configFile);
+			}
+
+			/* If not present in catalina conf directory, then check in classpath */
+			if (is == null) {
+				is = XPlannerProperties.class.getClassLoader().getResourceAsStream(customPropertyFileName);
+			}
             if (is != null) {
                customProperties.load(is);
                for (Iterator iterator = customProperties.keySet().iterator(); iterator.hasNext();) {
