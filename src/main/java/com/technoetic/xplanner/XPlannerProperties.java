@@ -63,9 +63,9 @@ public class XPlannerProperties {
          Properties customProperties = new Properties();
          try {
             String customPropertyFileName = System.getProperty(OVERRIDES_KEY, OVERRIDES_DEFAULT);
-            InputStream in = XPlannerProperties.class.getClassLoader().getResourceAsStream(customPropertyFileName);
-            if (in != null) {
-               customProperties.load(in);
+		InputStream is = XPlannerProperties.class.getClassLoader().getResourceAsStream(customPropertyFileName);
+            if (is != null) {
+               customProperties.load(is);
                for (Iterator iterator = customProperties.keySet().iterator(); iterator.hasNext();) {
                   String key = (String) iterator.next();
                   properties.put(key, customProperties.get(key));
