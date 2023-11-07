@@ -17,24 +17,21 @@
  * package xplanner.controller;
  */
 
-package xplanner;
+package xplanner.domain;
 
-public enum ThymeLeafTemplate {
-	LOGIN("login"),
-	PROJECT("project"),
-	PROJECT_TIMELOG("project-timelog"),
-	PROJECTS("projects"),
-	ROOT(""),
-	;
+import lombok.*;
+import java.util.*;
 
-	private static final String PREFIX = "thymeleaf";
-	private static final String SUFFIX = "html";
+@Getter @Setter
+public class TimeEntryPerDay {
+	private Date date;
+	private double hours = 0;
 
-	public final String pageName;
-	public final String redirectUrl;
+	public TimeEntryPerDay(Date date) {
+		this.date = date;
+	}
 
-	ThymeLeafTemplate(String pageName) {
-		this.pageName = String.format("%s/%s.%s", PREFIX, pageName, SUFFIX);
-		redirectUrl = "redirect:/" + pageName;
+	public void addHours(double hours) {
+		this.hours += hours;
 	}
 }

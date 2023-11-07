@@ -27,6 +27,7 @@ import com.technoetic.xplanner.security.auth.PrincipalSpecificPermissionHelper;
 import lombok.Getter;
 import net.sf.xplanner.domain.Permission;
 import net.sf.xplanner.domain.Project;
+import net.sf.xplanner.domain.TimeEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
@@ -46,10 +47,13 @@ public abstract class BaseController {
 	protected @Autowired PrincipalSpecificPermissionHelper principalSpecificPermissionHelper;
 
 	private static final Map<Class<?>, String> CONTEXT_URLS = new HashMap<>();
-	public static final String PROJECTS_URL = "/projects";
+	public static final String
+			PROJECTS_URL = "/projects",
+			PROJECT_TIMELOG_URL  = "/projects/{id}/timelog";
 
 	static {
-		CONTEXT_URLS.put(Project.class, PROJECTS_URL);
+		CONTEXT_URLS.put(Project.class,   PROJECTS_URL);
+		CONTEXT_URLS.put(TimeEntry.class, PROJECT_TIMELOG_URL);
 	}
 
 	public static String getContextUrl(Class<?> resourceClass) {

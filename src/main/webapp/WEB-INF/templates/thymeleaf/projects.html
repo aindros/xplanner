@@ -38,6 +38,13 @@
 			<tbody>
 			<tr th:each="project: ${projects}">
 				<td>
+					<a class="btn btn-primary"
+					        role="button"
+					        th:href="@{/projects/{oid}/timelog(oid=${project.id})}"
+					        th:title="#{timesheet.label.total}">
+						<i class="bi bi-calendar3"></i>
+					</a>
+
 					<a class="btn"
 					        th:classappend="${project.editable? 'btn-primary' : 'btn-secondary disabled'}"
 					        role="button"

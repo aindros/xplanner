@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="thymeleaf/master">
+<head>
+	<title th:text="#{project.prefix}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+	<div class="row justify-content-between">
+		<div class="col-4 btn-toolbar mb-1">
+		</div>
+		<div class="col-4 text-end">
+			<h1 th:text="${project.name}"></h1>
+		</div>
+	</div>
+
+	<div class="row">
+		<table class="table table-striped table-xplanner">
+			<thead>
+			<tr>
+				<th style="width: 15%" scope="col" th:text="#{iterations.tableheading.actions}">Actions</th>
+				<th scope="col" th:text="#{calendar.label.day}">Day</th>
+				<th scope="col" th:text="#{timesheet.tableheading.hours}">Hours</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="timeEntry: ${timeEntries}">
+				<td></td>
+				<th><span th:text="${#dates.format(timeEntry.date, 'dd/MM/yyyy')}" th:remove="tag"></span></th>
+				<td><span th:text="${timeEntry.hours}" th:remove="tag"></span></td>
+			</tr>
+			</tbody>
+			<tfoot>
+			<tr>
+				<td></td>
+				<th><span th:text="#{timesheet.label.total}" th:remove="tag"></span></th>
+				<th><span th:text="${totalHours}" th:remove="tag"></span></th>
+			</tr>
+			</tfoot>
+		</table>
+	</div>
+</div>
+</body>
+</html>

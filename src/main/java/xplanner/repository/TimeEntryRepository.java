@@ -17,24 +17,13 @@
  * package xplanner.controller;
  */
 
-package xplanner;
+package xplanner.repository;
 
-public enum ThymeLeafTemplate {
-	LOGIN("login"),
-	PROJECT("project"),
-	PROJECT_TIMELOG("project-timelog"),
-	PROJECTS("projects"),
-	ROOT(""),
-	;
+import net.sf.xplanner.domain.TimeEntry;
 
-	private static final String PREFIX = "thymeleaf";
-	private static final String SUFFIX = "html";
+import java.util.Date;
+import java.util.List;
 
-	public final String pageName;
-	public final String redirectUrl;
-
-	ThymeLeafTemplate(String pageName) {
-		this.pageName = String.format("%s/%s.%s", PREFIX, pageName, SUFFIX);
-		redirectUrl = "redirect:/" + pageName;
-	}
+public interface TimeEntryRepository extends Repository<TimeEntry, Integer> {
+	List<TimeEntry> findAllByProjectId(int projectId, Date startTime, Date endTime);
 }

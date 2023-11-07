@@ -92,6 +92,8 @@
 
 
 <tiles:put name="globalActions" direct="true">
+	<a href="/xplanner/projects/<%= project.getId() %>/timelog"><bean:message key="projects.link.aggregate.timesheet" /></a>
+
   <xplanner:isUserAuthorized resourceType="system.person" permission="read">
     <xplanner:link page="/do/view/people"><bean:message key="projects.link.people"/></xplanner:link> 
   </xplanner:isUserAuthorized>
