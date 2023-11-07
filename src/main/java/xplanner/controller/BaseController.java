@@ -33,6 +33,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import xplanner.service.AuthenticationService;
+import xplanner.ui.BreadCrumbBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -62,6 +63,10 @@ public abstract class BaseController {
 
 	protected Map<Integer, List<Permission>> getPermissions(HttpServletRequest request) throws AuthenticationException {
 		return principalSpecificPermissionHelper.getPermissionsForPrincipal(SecurityHelper.getRemoteUserId(request));
+	}
+
+	protected void addBreadCrumbs(Model model, List<BreadCrumbBuilder.Node> breadCrumbs) {
+		model.addAttribute("breadCrumbs", breadCrumbs);
 	}
 
 	protected void defaultModelAttributes(HttpServletRequest request,

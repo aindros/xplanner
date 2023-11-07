@@ -21,6 +21,8 @@ package xplanner.ui;
 
 import lombok.*;
 import net.sf.xplanner.domain.NamedObject;
+import net.sf.xplanner.domain.Project;
+import net.sf.xplanner.domain.TimeEntry;
 import org.springframework.context.MessageSource;
 import xplanner.controller.BaseController;
 
@@ -49,8 +51,8 @@ public class BreadCrumbBuilder {
 		return addNode(messageSource.getMessage("navigation.top", null, "Home", locale), "/");
 	}
 
-	public BreadCrumbBuilder toProject(NamedObject namedObject) {
-		return addNode(namedObject.getName(), getUrl(namedObject));
+	public BreadCrumbBuilder toProject(Project project) {
+		return addNode(project.getName(), getUrl(project));
 	}
 
 	private String getUrl(NamedObject namedObject) {
