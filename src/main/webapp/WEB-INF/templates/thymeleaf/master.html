@@ -120,7 +120,7 @@
 								        th:classappend="${breadCrumb.currentPage? 'active' : ''}">
 									<a class="link-body-emphasis fw-semibold text-decoration-none"
 									        th:if="${!breadCrumb.currentPage}"
-									        th:href="${breadCrumb.link}"
+									        th:href="@{${breadCrumb.link}}"
 									        th:text="${breadCrumb.label}"
 									        th:attr="aria-current=${breadCrumb.currentPage}?page">BreadCrumb</a>
 									<span th:if="${breadCrumb.currentPage}"
