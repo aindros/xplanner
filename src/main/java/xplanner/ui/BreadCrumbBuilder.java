@@ -60,10 +60,6 @@ public class BreadCrumbBuilder {
 	}
 
 	public List<Node> build() {
-		if (!nodes.isEmpty()) {
-			nodes.get(nodes.size() - 1).setCurrentPage(true);
-		}
-
 		return new ArrayList<>(nodes);
 	}
 
