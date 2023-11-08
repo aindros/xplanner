@@ -17,6 +17,11 @@
  * package xplanner.controller;
  */
 
+:root {
+	--main-bg-color:  #497dad;
+	--main-bg2-color: #dfecba;
+}
+
 .on-hover-fill-white:hover {
 	fill: white;
 }
@@ -27,9 +32,15 @@
 }
 
 .default-bg {
-	background: #497dad;
+	background: var(--main-bg-color) !important;
 	color: #ffffff;
 	fill: #ffffff;
+}
+
+.default-bg-2 {
+	background: var(--main-bg2-color);
+	color: #000000;
+	fill: #000000;
 }
 
 .default-bg .text-secondary {
@@ -38,7 +49,11 @@
 }
 
 .table-xplanner > thead > tr > th {
-	background: #497dad !important;
+	background: var(--main-bg-color) !important;
 	color: #ffffff;
 	fill: #ffffff;
+}
+
+.table-xplanner > tfoot > tr > th {
+	background: var(--main-bg2-color) !important;
 }
