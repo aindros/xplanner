@@ -46,6 +46,7 @@
 			<thead>
 			<tr>
 				<th style="width: 15%" scope="col" th:text="#{iterations.tableheading.actions}">Actions</th>
+				<th scope="col" th:text="#{search.results.type}">Type</th>
 				<th scope="col" th:text="#{calendar.label.day}">Day</th>
 				<th scope="col" th:text="#{timesheet.tableheading.hours}">Hours</th>
 			</tr>
@@ -53,14 +54,14 @@
 			<tbody>
 			<tr th:each="timeEntry: ${timeEntries}">
 				<td></td>
+				<td><span th:text="${timeEntry.entryTimeTypeName}" th:remove="tag"></span></td>
 				<th><span th:text="${#dates.format(timeEntry.date, 'dd/MM/yyyy')}" th:remove="tag"></span></th>
 				<td><span th:text="${timeEntry.hours}" th:remove="tag"></span></td>
 			</tr>
 			</tbody>
 			<tfoot>
 			<tr>
-				<td></td>
-				<th><span th:text="#{timesheet.label.total}" th:remove="tag"></span></th>
+				<th colspan="3" class="text-end"><span th:text="#{timesheet.label.total}" th:remove="tag"></span></th>
 				<th><span th:text="${totalHours}" th:remove="tag"></span></th>
 			</tr>
 			</tfoot>

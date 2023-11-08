@@ -33,6 +33,7 @@ public class TimeEditorForm extends AbstractEditorForm {
    private ArrayList people2 = new ArrayList();
    private ArrayList reportDates = new ArrayList();
    private ArrayList descriptions = new ArrayList();
+   private ArrayList timeEntryTypes = new ArrayList();
 
    private HashSet previousMementos = new HashSet();
    private String remainingHours;
@@ -175,6 +176,7 @@ public class TimeEditorForm extends AbstractEditorForm {
          endTimes.clear();
          people1.clear();
          people2.clear();
+         timeEntryTypes.clear();
          durations.clear();
          reportDates.clear();
          descriptions.clear();
@@ -240,6 +242,20 @@ public class TimeEditorForm extends AbstractEditorForm {
    public String getPerson1Id(int index) {
       ensureSize(people1, index + 1);
       return (String) people1.get(index);
+   }
+
+   public void setTimeEntryType(int index, String id) {
+      ensureSize(timeEntryTypes, index + 1);
+      timeEntryTypes.set(index, id);
+   }
+
+   public String getTimeEntryType(int index) {
+      ensureSize(timeEntryTypes, index + 1);
+
+      String id = (String) timeEntryTypes.get(index);
+      if (id == null) return "0";
+
+      return id;
    }
 
    public void setPerson2Id(int index, String id) {

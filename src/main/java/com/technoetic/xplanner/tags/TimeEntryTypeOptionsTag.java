@@ -17,22 +17,29 @@
  * package xplanner.controller;
  */
 
-package xplanner.domain;
+package com.technoetic.xplanner.tags;
 
-import lombok.*;
-import java.util.*;
+import com.technoetic.xplanner.security.AuthenticationException;
+import org.hibernate.HibernateException;
+import xplanner.domain.TimeEntryType;
 
-@Getter @Setter
-public class TimeEntryPerDay {
-	private Date date;
-	private double hours = 0;
-	private String entryTimeTypeName;
+import java.util.List;
 
-	public TimeEntryPerDay(Date date) {
-		this.date = date;
+public class TimeEntryTypeOptionsTag extends OptionsTag {
+	public static final String ALL_TIME_ENTRY_TYPES_QUERY = "from " + TimeEntryType.class.getName() + " as t";
+
+	@Override
+	public void release() {
+		super.release();
 	}
 
-	public void addHours(double hours) {
-		this.hours += hours;
+	@Override
+	protected List<?> getOptions() throws HibernateException, AuthenticationException {
+		return fetchAllTypes();
+	}
+
+	@SuppressWarnings("unchecked")
+	private List<TimeEntryType> fetchAllTypes() throws HibernateException {
+		return getSession().createQuery(ALL_TIME_ENTRY_TYPES_QUERY).list();
 	}
 }

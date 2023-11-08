@@ -160,6 +160,12 @@ public class UpdateTimeAction extends AbstractAction<TimeEntry> {
 					person2Id = Integer.parseInt(form.getPerson2Id(i));
 				}
 
+				Integer timeEntryTypeId = null;
+				if (isPresent(form.getTimeEntryType(i))) {
+					timeEntryTypeId = Integer.parseInt(form.getTimeEntryType(i));
+					if (timeEntryTypeId == 0) timeEntryTypeId = null;
+				}
+
 				double duration = 0;
 				if (isPresent(form.getDuration(i))) {
 					duration = decimalParser.parse(form.getDuration(i));
@@ -176,7 +182,7 @@ public class UpdateTimeAction extends AbstractAction<TimeEntry> {
 					if (startTime != null || duration > 0) {
 						TimeEntry entry = new TimeEntry();
 						editEntry(entry, startTime, endTime, duration,
-								person1Id, person2Id, reportDate, description);
+								person1Id, person2Id, timeEntryTypeId, reportDate, description);
 						entry.setTask(task);
 						getCommonDao().save(entry);
 						
@@ -190,7 +196,7 @@ public class UpdateTimeAction extends AbstractAction<TimeEntry> {
 				} else {
 					TimeEntry entry = getEntry(timeEntries, id);
 					editEntry(entry, startTime, endTime, duration, person1Id,
-							person2Id, reportDate, description);
+							person2Id, timeEntryTypeId, reportDate, description);
 					hoursWorked += entry.getEffort();
 				}
 			}
@@ -219,6 +225,7 @@ public class UpdateTimeAction extends AbstractAction<TimeEntry> {
                           double duration,
                           int person1Id,
                           int person2Id,
+                          Integer timeEntryTypeId,
                           Date reportDate,
                           String description) {
      entry.setStartTime(startTime);
@@ -228,6 +235,7 @@ public class UpdateTimeAction extends AbstractAction<TimeEntry> {
      entry.setPerson2Id(person2Id);
      entry.setReportDate(reportDate);
      entry.setDescription(description);
+		entry.setTimeEntryTypeId(timeEntryTypeId);
    }
 
   private boolean isIterationStarted(HttpServletRequest request, Task task) throws RepositoryException, HibernateException {//Autostart iteration
@@ -296,6 +304,7 @@ public class UpdateTimeAction extends AbstractAction<TimeEntry> {
          form.setDuration(i, DecimalFormat.format(request, entry.getDuration()));
          form.setPerson1Id(i, Integer.toString(entry.getPerson1Id()));
          form.setPerson2Id(i, Integer.toString(entry.getPerson2Id()));
+         form.setTimeEntryType(i, String.valueOf(entry.getTimeEntryTypeId() == null? 0 : entry.getTimeEntryTypeId()));
          if (entry.getReportDate() != null) {
             form.setReportDate(i, dateFormat.format(entry.getReportDate()));
          } else {

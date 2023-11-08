@@ -17,22 +17,21 @@
  * package xplanner.controller;
  */
 
-package xplanner.domain;
+package xplanner.repository;
 
-import lombok.*;
-import java.util.*;
+import net.sf.xplanner.domain.TimeEntry;
+import org.springframework.stereotype.Component;
+import xplanner.domain.TimeEntryType;
+import xplanner.repository.command.HQLCommand;
 
-@Getter @Setter
-public class TimeEntryPerDay {
-	private Date date;
-	private double hours = 0;
-	private String entryTimeTypeName;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-	public TimeEntryPerDay(Date date) {
-		this.date = date;
-	}
-
-	public void addHours(double hours) {
-		this.hours += hours;
+@Component("timeEntryTypeRepository")
+public class TimeEntryRepositoryTypeImpl extends BaseRepository<TimeEntryType, Integer> implements TimeEntryTypeRepository {
+	protected TimeEntryRepositoryTypeImpl() {
+		super(TimeEntryType.class);
 	}
 }

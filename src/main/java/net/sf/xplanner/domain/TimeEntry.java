@@ -42,6 +42,7 @@ public class TimeEntry extends DomainObject implements java.io.Serializable, Nam
 	private double duration;
 	private int person1Id;
 	private int person2Id;
+	private Integer timeEntryTypeId;
 	private Task task;
 	private Date reportDate;
 	private String description;
@@ -97,6 +98,15 @@ public class TimeEntry extends DomainObject implements java.io.Serializable, Nam
 
 	public void setPerson2Id(int person2Id) {
 		this.person2Id = person2Id;
+	}
+
+	@Column(name = "time_entry_type_id")
+	public Integer getTimeEntryTypeId() {
+		return timeEntryTypeId;
+	}
+
+	public void setTimeEntryTypeId(Integer timeEntryTypeId) {
+		this.timeEntryTypeId = timeEntryTypeId;
 	}
 
 	@ManyToOne

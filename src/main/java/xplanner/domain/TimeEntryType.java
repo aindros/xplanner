@@ -19,20 +19,11 @@
 
 package xplanner.domain;
 
-import lombok.*;
-import java.util.*;
+import net.sf.xplanner.domain.NamedObject;
 
-@Getter @Setter
-public class TimeEntryPerDay {
-	private Date date;
-	private double hours = 0;
-	private String entryTimeTypeName;
+import javax.persistence.*;
 
-	public TimeEntryPerDay(Date date) {
-		this.date = date;
-	}
-
-	public void addHours(double hours) {
-		this.hours += hours;
-	}
+@Entity
+@Table(name = "time_entry_type")
+public class TimeEntryType extends NamedObject {
 }

@@ -72,6 +72,7 @@ function getTimeField(name, offset) {
       <th nowrap><span id="remainingHoursLabel" style="color: black">
             <bean:message key="timelog.editor.remainingHours"/></span>
       </th>
+      <th><bean:message key="timelog.editor.type"/></th>
       <th><bean:message key="timelog.editor.person1"/></th>
       <th>
       
@@ -133,6 +134,13 @@ function getTimeField(name, offset) {
         <% } else { %>
             &nbsp;
         <% } %>
+      </td>
+      <td class="objecttable small_th_6">
+		<html:select name="entries" property='<%="timeEntryType["+row+"]"%>'
+				value='<%=entries.getTimeEntryType(row)%>'>
+			<html:option value="0">&nbsp;</html:option>
+			<xplanner:timeEntryTypesOptions />
+		</html:select>
       </td>
       <td class="objecttable small_th_6">
 		<html:select name="entries" property='<%="person1Id["+row+"]"%>'

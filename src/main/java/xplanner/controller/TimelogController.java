@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import xplanner.ThymeLeafTemplate;
 import xplanner.domain.TimeEntryPerDay;
+import xplanner.domain.TimeEntryType;
 import xplanner.repository.*;
 import xplanner.ui.BreadCrumbBuilder;
 import xplanner.util.DateUtils;
@@ -50,6 +51,7 @@ public class TimelogController extends BaseController {
 
 	private @Autowired ProjectRepository projectRepository;
 	private @Autowired TimeEntryRepository timeEntryRepository;
+	private @Autowired TimeEntryTypeRepository timeEntryTypeRepository;
 	private @Autowired MessageSource messageSource;
 
 	@RequestMapping(method = GET)

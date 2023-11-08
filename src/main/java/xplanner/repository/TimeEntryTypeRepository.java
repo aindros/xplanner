@@ -17,22 +17,13 @@
  * package xplanner.controller;
  */
 
-package xplanner.domain;
+package xplanner.repository;
 
-import lombok.*;
-import java.util.*;
+import net.sf.xplanner.domain.TimeEntry;
+import xplanner.domain.TimeEntryType;
 
-@Getter @Setter
-public class TimeEntryPerDay {
-	private Date date;
-	private double hours = 0;
-	private String entryTimeTypeName;
+import java.util.Date;
+import java.util.List;
 
-	public TimeEntryPerDay(Date date) {
-		this.date = date;
-	}
-
-	public void addHours(double hours) {
-		this.hours += hours;
-	}
+public interface TimeEntryTypeRepository extends Repository<TimeEntryType, Integer> {
 }

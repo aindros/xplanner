@@ -91,6 +91,17 @@
   </tag>
 
   <tag>
+    <name>timeEntryTypesOptions</name>
+    <tag-class>com.technoetic.xplanner.tags.TimeEntryTypeOptionsTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
     <name>iterationOptions</name>
     <tag-class>com.technoetic.xplanner.tags.IterationOptionsTag</tag-class>
     <body-content>empty</body-content>
