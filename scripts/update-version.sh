@@ -22,6 +22,7 @@ if [ $# -gt 0 ]; then
 	esac
 else
 	UPDATE_VERSION=1
+	UPDATE_REVISION=1
 fi
 
 if [ ! -z $UPDATE_VERSION ]; then
