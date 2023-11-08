@@ -54,8 +54,8 @@ public class TimelogController extends BaseController {
 
 	@RequestMapping(method = GET)
 	public String doViewProject(@PathVariable Integer id,
-	                            @RequestParam(value = "sd", required = false) Date startTime,
-	                            @RequestParam(value = "ed", required = false) Date endTime,
+	                            @RequestParam(value = "m", required = false) Integer month,
+	                            @RequestParam(value = "y", required = false) Integer year,
 	                            final HttpServletRequest request,
 	                            Model model,
 	                            Locale locale) throws AuthenticationException, ParseException {
@@ -66,9 +66,18 @@ public class TimelogController extends BaseController {
 			return null;
 		}
 
-		if (startTime == null && endTime == null) {
+		Date startTime = null, endTime = null;
+
+		if (month != null && year != null) {
+			startTime = DateUtils.firstDayOfTheMonth(month, year);
+			endTime = DateUtils.lastDayOfTheMonth(month, year);
+		} else {
 			startTime = DateUtils.firstDayOfTheMonth();
 			endTime = DateUtils.lastDayOfTheMonth();
+
+			Calendar calendar = Calendar.getInstance();
+			month = calendar.get(Calendar.MONTH);
+			year = calendar.get(Calendar.YEAR);
 		}
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -93,6 +102,8 @@ public class TimelogController extends BaseController {
 			totalHours += entryPerDay.getHours();
 		}
 
+		model.addAttribute("monthFilter", month);
+		model.addAttribute("yearFilter", year);
 		model.addAttribute("project", project);
 		model.addAttribute("timeEntries", timeEntries);
 		model.addAttribute("totalHours",  totalHours);

@@ -7,7 +7,34 @@
 <body>
 <div layout:fragment="content">
 	<div class="row justify-content-between">
-		<div class="col-4 btn-toolbar mb-1">
+		<div class="col-6 btn-toolbar mb-1" action="@{/projects/{oid}/timelog(oid=${project.id})}" method="get">
+			<form class="row g-3">
+				<div class="col-auto">
+					<label for="selectMonth" class="visually-hidden" th:text="#{calendar.months}">Months</label>
+					<select id="selectMonth" name="m" class="form-select" aria-label="#{calendar.label.months}" th:placeholder="#{calendar.label.sel_month}">
+						<option th:selected="${monthFilter == 0}"  value="0"  th:text="#{calendar.january}">0</option>
+						<option th:selected="${monthFilter == 1}"  value="1"  th:text="#{calendar.february}">1</option>
+						<option th:selected="${monthFilter == 2}"  value="2"  th:text="#{calendar.march}">2</option>
+						<option th:selected="${monthFilter == 3}"  value="3"  th:text="#{calendar.april}">3</option>
+						<option th:selected="${monthFilter == 4}"  value="4"  th:text="#{calendar.may}">4</option>
+						<option th:selected="${monthFilter == 5}"  value="5"  th:text="#{calendar.june}">5</option>
+						<option th:selected="${monthFilter == 6}"  value="6"  th:text="#{calendar.july}">6</option>
+						<option th:selected="${monthFilter == 7}"  value="7"  th:text="#{calendar.august}">7</option>
+						<option th:selected="${monthFilter == 8}"  value="8"  th:text="#{calendar.september}">8</option>
+						<option th:selected="${monthFilter == 9}"  value="9"  th:text="#{calendar.october}">9</option>
+						<option th:selected="${monthFilter == 10}" value="10" th:text="#{calendar.november}">10</option>
+						<option th:selected="${monthFilter == 11}" value="11" th:text="#{calendar.december}">11</option>
+					</select>
+				</div>
+				<div class="col-auto">
+					<label for="inputYear" class="visually-hidden" th:text="#{calendar.label.year}">Year</label>
+					<input name="y" type="number" min="2020" class="form-control" id="inputYear"
+					        th:placeholder="#{calendar.label.year}" th:value="${yearFilter}">
+				</div>
+				<div class="col-auto">
+					<button type="submit" class="btn btn-primary mb-3" th:text="#{contentsearch.button.label}">Search</button>
+				</div>
+			</form>
 		</div>
 		<div class="col-4 text-end">
 			<h1 th:text="${project.name}"></h1>
