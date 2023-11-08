@@ -71,7 +71,7 @@ public class HibernateHelper {
                 String transformerFileName = properties.getProperty("xplanner.hibernate.mappingtransform");
                 LOG.info("Using Hibernate mapping transformer: " + transformerFileName);
             }
-            AnnotationConfiguration cfg = new AnnotationConfiguration();
+            Configuration cfg = new Configuration();
             cfg.addAnnotatedClass(Identifier.class);
             cfg.addAnnotatedClass(Attribute.class);
             cfg.addAnnotatedClass(DataSample.class);
