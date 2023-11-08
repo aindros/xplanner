@@ -86,14 +86,28 @@ public class TimelogController extends BaseController {
 
 		Map<String, TimeEntryPerDay> timeEntryMap = new HashMap<>();
 		Collection<String> keys = new LinkedHashSet<>();
+		Map<Integer, TimeEntryType> timeEntryTypeMap = new HashMap<>();
 		for (TimeEntry timeEntry : timeEntryRepository.findAllByProjectId(id, startTime, endTime)) {
-			String key = sdf.format(timeEntry.getStartTime());
+			int timeEntryTypeId = timeEntry.getTimeEntryTypeId() == null? 0 : timeEntry.getTimeEntryTypeId();
+			String key = timeEntryTypeId + "|" + sdf.format(timeEntry.getStartTime());
 			keys.add(key);
 			if (timeEntryMap.get(key) == null) {
-				timeEntryMap.put(key, new TimeEntryPerDay(sdf.parse(key)));
+				timeEntryMap.put(key, new TimeEntryPerDay(timeEntry.getStartTime()));
 			}
 
-			timeEntryMap.get(key).addHours(timeEntry.getDuration());
+			TimeEntryPerDay ted = timeEntryMap.get(key);
+			ted.addHours(timeEntry.getDuration());
+
+			if (timeEntryTypeId != 0) {
+				TimeEntryType entryType = timeEntryTypeMap.get(timeEntryTypeId);
+
+				if (entryType == null) {
+					entryType = timeEntryTypeRepository.findById(timeEntry.getTimeEntryTypeId());
+					timeEntryTypeMap.put(timeEntry.getTimeEntryTypeId(), entryType);
+				}
+
+				ted.setEntryTimeTypeName(entryType.getName());
+			}
 		}
 
 		List<TimeEntryPerDay> timeEntries = new ArrayList<>();
