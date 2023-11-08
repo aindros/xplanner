@@ -3,6 +3,7 @@ CATALINA      = ${CATALINA_HOME}/bin/catalina.sh
 JPDA_OPTS     = -agentlib:jdwp=transport=dt_socket,address=5005,server=y,suspend=y
 VERSION_POM  != grep '<version' pom.xml | head -1 | sed -E 's/.*<.*>(.*)<.*>/\1/g'
 APPNAME       = xplanner
+NAME          = XPlanner+
 WARPACKAGE    = target/${APPNAME}.war
 SRCPACKAGE    = target/${APPNAME}-${VERSION_POM}-sources.tar.gz
 
@@ -34,8 +35,8 @@ update-revision:
 tag-release: update-version
 	@git add pom.xml
 	@git add src/main/resources/xplanner.properties
-	@git commit -m "${APPNAME} ${VERSION_POM}"
-	@git tag v${VERSION_POM}
+	@git commit -m "${NAME} ${VERSION_POM}"
+	@git tag -a v${VERSION_POM} -m "Version ${VERSION_POM}"
 
 deploy: ${WARPACKAGE}
 	cp ${WARPACKAGE} ${CATALINA_HOME}/webapps
