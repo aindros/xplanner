@@ -26,10 +26,7 @@ import net.sf.xplanner.domain.TimeEntry;
 import org.springframework.context.MessageSource;
 import xplanner.controller.BaseController;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class BreadCrumbBuilder {
 	private final MessageSource messageSource;
@@ -52,11 +49,14 @@ public class BreadCrumbBuilder {
 	}
 
 	public BreadCrumbBuilder toProject(Project project) {
-		return addNode(project.getName(), getUrl(project));
+		Map<String, String> parameters = new HashMap<>();
+		parameters.put("id", String.valueOf(project.getId()));
+
+		return addNode(project.getName(), getUrl(BaseController.PROJECTS_KEY, parameters));
 	}
 
-	private String getUrl(NamedObject namedObject) {
-		return BaseController.getContextUrl(namedObject.getClass()) + "/" + namedObject.getId();
+	private String getUrl(String key, Map<String, String> parameters) {
+		return BaseController.getContextUrl(key, parameters);
 	}
 
 	public List<Node> build() {

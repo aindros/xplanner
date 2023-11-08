@@ -47,18 +47,30 @@ public abstract class BaseController {
 	protected @Autowired MessageSource messageSource;
 	protected @Autowired PrincipalSpecificPermissionHelper principalSpecificPermissionHelper;
 
-	private static final Map<Class<?>, String> CONTEXT_URLS = new HashMap<>();
+	private static final Map<String, String> CONTEXT_URLS = new HashMap<>();
 	public static final String
 			PROJECTS_URL = "/projects",
-			PROJECT_TIMELOG_URL  = "/projects/{id}/timelog";
+			PROJECT_TIMELOG_URL  = "/{id}/timelog";
+
+	public static final String
+			PROJECTS_KEY = "projects",
+			PROJECT_TIMELOG_KEY = "projectTimelog";
 
 	static {
-		CONTEXT_URLS.put(Project.class,   PROJECTS_URL);
-		CONTEXT_URLS.put(TimeEntry.class, PROJECT_TIMELOG_URL);
+		CONTEXT_URLS.put(PROJECTS_KEY,   PROJECTS_URL);
+		CONTEXT_URLS.put(PROJECT_TIMELOG_KEY, PROJECTS_URL + PROJECT_TIMELOG_URL);
 	}
 
-	public static String getContextUrl(Class<?> resourceClass) {
-		return CONTEXT_URLS.get(resourceClass);
+	public static String getContextUrl(String key, Map<String, String> parameters) {
+		String url = CONTEXT_URLS.get(key) == null? "" : CONTEXT_URLS.get(key);
+		if (url.isEmpty()) return url;
+
+		for (Map.Entry<String, String> entry : parameters.entrySet()) {
+			String placeHolder = "{" + entry.getKey() + "}";
+			url = url.replace(placeHolder, entry.getValue());
+		}
+
+		return url;
 	}
 
 	protected Map<Integer, List<Permission>> getPermissions(HttpServletRequest request) throws AuthenticationException {
