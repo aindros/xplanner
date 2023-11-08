@@ -125,15 +125,17 @@ public class ProjectController extends BaseController {
 
 		if (month != null && year != null) {
 			startTime = DateUtils.firstDayOfTheMonth(month, year);
-			endTime = DateUtils.lastDayOfTheMonth(month, year);
+			/*endTime = DateUtils.lastDayOfTheMonth(month, year);*/
 		} else {
-			startTime = DateUtils.firstDayOfTheMonth();
-			endTime = DateUtils.lastDayOfTheMonth();
-
 			Calendar calendar = Calendar.getInstance();
-			month = calendar.get(Calendar.MONTH);
 			year = calendar.get(Calendar.YEAR);
+			month = calendar.get(Calendar.MONTH);
+			startTime = DateUtils.firstDayOfTheMonth();
+			/*endTime = DateUtils.lastDayOfTheMonth();*/
 		}
+
+		/* Workaound to make working the stupid query with dates in conditions! */
+		endTime = DateUtils.firstDayOfTheMonth(month + 1, year);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
