@@ -42,7 +42,7 @@
 			<version>${spring.version}</version>
 		</dependency>
 
-		<!-- Thymeleaf integrtion -->
+		<!-- Thymeleaf integration -->
 		<dependency>
 			<groupId>org.thymeleaf</groupId>
 			<artifactId>thymeleaf</artifactId>
