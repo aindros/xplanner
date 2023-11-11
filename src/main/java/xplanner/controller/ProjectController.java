@@ -19,6 +19,7 @@
 
 package xplanner.controller;
 
+import com.lowagie.text.DocumentException;
 import com.technoetic.xplanner.security.AuthenticationException;
 import com.technoetic.xplanner.security.SecurityHelper;
 import net.sf.xplanner.domain.Permission;
@@ -28,6 +29,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +45,7 @@ import xplanner.ui.BreadCrumbBuilder;
 import xplanner.util.DateUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -111,6 +114,7 @@ public class ProjectController extends BaseController {
 	public String doViewProjectTimelog(@PathVariable Integer id,
 	                                   @RequestParam(value = "m", required = false) Integer month,
 	                                   @RequestParam(value = "y", required = false) Integer year,
+	                                   @RequestParam(value = "output", required = false) String output,
 	                                   final HttpServletRequest request,
 	                                   Model model,
 	                                   Locale locale) throws AuthenticationException, ParseException {
@@ -123,6 +127,7 @@ public class ProjectController extends BaseController {
 
 		Date startTime = null, endTime = null;
 
+		String monthName;
 		if (month != null && year != null) {
 			startTime = DateUtils.firstDayOfTheMonth(month, year);
 			/*endTime = DateUtils.lastDayOfTheMonth(month, year);*/
@@ -136,6 +141,7 @@ public class ProjectController extends BaseController {
 
 		/* Workaound to make working the stupid query with dates in conditions! */
 		endTime = DateUtils.firstDayOfTheMonth(month + 1, year);
+		monthName = new SimpleDateFormat("MMMM", locale).format(startTime);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -173,6 +179,7 @@ public class ProjectController extends BaseController {
 			totalHours += entryPerDay.getHours();
 		}
 
+		model.addAttribute("monthName", monthName);
 		model.addAttribute("monthFilter", month);
 		model.addAttribute("yearFilter", year);
 		model.addAttribute("project", project);
@@ -180,6 +187,11 @@ public class ProjectController extends BaseController {
 		model.addAttribute("totalHours",  totalHours);
 
 		addBreadCrumbs(model, new BreadCrumbBuilder(messageSource, locale).toProject(project).build());
+
+		if ("PDF".equalsIgnoreCase(output) && model instanceof ModelMap) {
+			ModelMap modelMap = (ModelMap) model;
+			exportToPdfBox(modelMap, ThymeLeafTemplate.PROJECT_TIMELOG_PDF.pageName, "/tmp/1699463409681.pdf", locale);
+		}
 
 		return ThymeLeafTemplate.PROJECT_TIMELOG.pageName;
 	}

@@ -19,24 +19,25 @@
 
 package xplanner.controller;
 
+import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import com.technoetic.xplanner.XPlannerProperties;
-import com.technoetic.xplanner.domain.Identifiable;
 import com.technoetic.xplanner.security.AuthenticationException;
 import com.technoetic.xplanner.security.SecurityHelper;
 import com.technoetic.xplanner.security.auth.PrincipalSpecificPermissionHelper;
 import lombok.Getter;
 import net.sf.xplanner.domain.Permission;
-import net.sf.xplanner.domain.Project;
-import net.sf.xplanner.domain.TimeEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring3.SpringTemplateEngine;
 import xplanner.service.AuthenticationService;
 import xplanner.ui.BreadCrumbBuilder;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -108,5 +109,33 @@ public abstract class BaseController {
 
 	protected static class ControllerData {
 		private final @Getter Map<Integer, List<Permission>> permissions = new HashMap<>();
+	}
+
+	protected @Autowired SpringTemplateEngine templateEngine;
+
+	public File exportToPdfBox(Map<String, Object> variables, String templatePath, String out, Locale locale) {
+		try (OutputStream os = new FileOutputStream(out);) {
+			// There are more options on the builder than shown below.
+			PdfRendererBuilder builder = new PdfRendererBuilder();
+			builder.withHtmlContent(getHtmlString(variables, templatePath, locale), "file:");
+			builder.toStream(os);
+			builder.run();
+		} catch (Exception e) {
+//			log.error("Exception while generating pdf : {}", e);
+		}
+
+		return new File(out);
+	}
+
+	private String getHtmlString(Map<String, Object> variables, String templatePath, Locale locale) {
+		try {
+			final Context ctx = new Context();
+			ctx.setVariables(variables);
+			ctx.setLocale(locale);
+			return templateEngine.process(templatePath, ctx);
+		} catch (Exception e) {
+//			logger.error("Exception while getting html string from template engine : {}", e);
+			return null;
+		}
 	}
 }

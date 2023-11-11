@@ -1,0 +1,88 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<style>
+		* {
+			font-family: sans-serif;
+		}
+
+		h1, h3 {
+			font-weight: normal;
+		}
+
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		.container {
+			max-width: 1320px;
+			margin: 0 auto;
+			padding: 0 10pt;
+		}
+
+		.table-xplanner {
+			width: 100%;
+			border-collapse: collapse;
+			margin: 0;
+		}
+
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+
+		.table-xplanner td, .table-xplanner th {
+			padding: 0.5rem 0.5rem;
+			text-align: left;
+		}
+
+		.table-xplanner > thead > tr > th {
+			background: #497dad !important;
+			color: #ffffff;
+			fill: #ffffff;
+		}
+
+		.table-xplanner > tfoot > tr > th {
+			background: #dfecba !important;
+		}
+
+		.text-end {
+			text-align: right !important;
+		}
+
+		.text-center {
+			text-align: center !important;
+		}
+	</style>
+</head>
+
+<body>
+<div class="container" style="margin-bottom: 75pt">
+	<p class="text-center" th:text="#{report.monthly}">Monthly report</p>
+	<h1 th:text="${authenticatedUser.name}">Alessandro Iezzi</h1>
+	<h3 class="text-end"><span th:text="${monthName}">Month</span> <span th:text="${yearFilter}">2023</span></h3>
+
+	<table class="table-xplanner">
+		<thead>
+		<tr>
+			<th scope="col"></th>
+			<th scope="col" th:text="#{calendar.label.day}">Day</th>
+			<th scope="col" th:text="#{timesheet.tableheading.hours}">Hours</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="timeEntry: ${timeEntries}">
+			<td><span th:text="${timeEntry.entryTimeTypeName}" th:remove="tag">Type</span></td>
+			<th><span th:text="${#dates.format(timeEntry.date, 'dd/MM/yyyy')}" th:remove="tag">dd/MM/yyyy</span></th>
+			<td><span th:text="${timeEntry.hours}" th:remove="tag">3.5</span></td>
+		</tr>
+		</tbody>
+		<tfoot>
+		<tr>
+			<th colspan="2" class="text-end"><span th:text="#{timesheet.label.total}" th:remove="tag">Total hours</span></th>
+			<th><span th:text="${totalHours}" th:remove="tag">3.5</span></th>
+		</tr>
+		</tfoot>
+	</table>
+</div>
+</body>
+</html>

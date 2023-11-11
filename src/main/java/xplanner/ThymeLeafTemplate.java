@@ -23,6 +23,7 @@ public enum ThymeLeafTemplate {
 	LOGIN("login"),
 	PROJECT("project"),
 	PROJECT_TIMELOG("project-timelog"),
+	PROJECT_TIMELOG_PDF("project-timelog-pdf"),
 	PROJECTS("projects"),
 	ROOT(""),
 	;
