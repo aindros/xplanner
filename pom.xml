@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>it.alessandroiezzi</groupId>
@@ -22,7 +23,7 @@
 		<thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
   </properties>
 
-  <dependencies>
+	<dependencies>
 		<!-- Spring framework -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -75,12 +76,12 @@
 			<version>1.18.30</version>
 		</dependency>
 
-	  <!-- FlyWay -->
-	  <dependency>
-		  <groupId>org.flywaydb</groupId>
-		  <artifactId>flyway-core</artifactId>
-		  <version>8.5.13</version>
-	  </dependency>
+		<!-- FlyWay -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>8.5.13</version>
+		</dependency>
 
 	  <!-- Database connectors -->
 	  <dependency>
@@ -171,7 +172,7 @@
       <version>1.0.1</version>
       <scope>system</scope>
       <systemPath>${basedir}/lib/tk-util-1.0.1.jar</systemPath>
-    </dependency>	
+    </dependency>
     <dependency>
       <groupId>proxytoys</groupId>
       <artifactId>proxytoys</artifactId>
@@ -627,7 +628,7 @@
 	  <artifactId>spring-core</artifactId>
 	  <groupId>org.springframework</groupId>
 	</exclusion>
-	
+
       </exclusions>
     </dependency>
     <dependency>
