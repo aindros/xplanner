@@ -42,9 +42,12 @@ import xplanner.repository.TimeEntryTypeRepository;
 import xplanner.service.PermissionService;
 import xplanner.sql.Order;
 import xplanner.ui.BreadCrumbBuilder;
+import xplanner.ui.render.PDFRender;
 import xplanner.util.DateUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -116,8 +119,9 @@ public class ProjectController extends BaseController {
 	                                   @RequestParam(value = "y", required = false) Integer year,
 	                                   @RequestParam(value = "output", required = false) String output,
 	                                   final HttpServletRequest request,
+	                                   final HttpServletResponse response,
 	                                   Model model,
-	                                   Locale locale) throws AuthenticationException, ParseException {
+	                                   Locale locale) throws AuthenticationException, ParseException, IOException {
 		ControllerData data = new ControllerData();
 		defaultModelAttributes(request, model, locale, data);
 		Project project = projectRepository.findById(id);
@@ -190,7 +194,11 @@ public class ProjectController extends BaseController {
 
 		if ("PDF".equalsIgnoreCase(output) && model instanceof ModelMap) {
 			ModelMap modelMap = (ModelMap) model;
-			exportToPdfBox(modelMap, ThymeLeafTemplate.PROJECT_TIMELOG_PDF.pageName, "/tmp/1699463409681.pdf", locale);
+			File pdfFile = exportToPdfBox(modelMap, ThymeLeafTemplate.PROJECT_TIMELOG_PDF.pageName, null, locale);
+			if (pdfFile != null) {
+				new PDFRender().render(pdfFile, response);
+				return null;
+			}
 		}
 
 		return ThymeLeafTemplate.PROJECT_TIMELOG.pageName;

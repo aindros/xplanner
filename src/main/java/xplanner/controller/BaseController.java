@@ -26,6 +26,7 @@ import com.technoetic.xplanner.security.SecurityHelper;
 import com.technoetic.xplanner.security.auth.PrincipalSpecificPermissionHelper;
 import lombok.Getter;
 import net.sf.xplanner.domain.Permission;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
@@ -38,12 +39,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public abstract class BaseController {
+	public static final Logger log = Logger.getLogger(BaseController.class);
+
 	private @Autowired AuthenticationService authenticationService;
 	protected @Autowired MessageSource messageSource;
 	protected @Autowired PrincipalSpecificPermissionHelper principalSpecificPermissionHelper;
@@ -112,16 +112,26 @@ public abstract class BaseController {
 	}
 
 	protected @Autowired SpringTemplateEngine templateEngine;
+	private final String TMP = "/tmp";
 
 	public File exportToPdfBox(Map<String, Object> variables, String templatePath, String out, Locale locale) {
+		if (out == null || out.isEmpty()) {
+			int retries = 3;
+			do {
+				out = TMP + "/" + new Date().getTime() + ".pdf";
+			} while (new File(out).exists() && retries-- > 0);
+			if (retries == 0) {
+				throw null;
+			}
+		}
+
 		try (OutputStream os = new FileOutputStream(out);) {
-			// There are more options on the builder than shown below.
 			PdfRendererBuilder builder = new PdfRendererBuilder();
 			builder.withHtmlContent(getHtmlString(variables, templatePath, locale), "file:");
 			builder.toStream(os);
 			builder.run();
 		} catch (Exception e) {
-//			log.error("Exception while generating pdf : {}", e);
+			log.error("Exception while generating pdf: {}", e);
 		}
 
 		return new File(out);
@@ -129,13 +139,15 @@ public abstract class BaseController {
 
 	private String getHtmlString(Map<String, Object> variables, String templatePath, Locale locale) {
 		try {
-			final Context ctx = new Context();
-			ctx.setVariables(variables);
-			ctx.setLocale(locale);
-			return templateEngine.process(templatePath, ctx);
+			final Context context = new Context();
+			context.setVariables(variables);
+			context.setLocale(locale);
+
+			return templateEngine.process(templatePath, context);
 		} catch (Exception e) {
-//			logger.error("Exception while getting html string from template engine : {}", e);
-			return null;
+			log.error("Exception while getting html string from template engine: {}", e);
 		}
+
+		return null;
 	}
 }
