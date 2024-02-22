@@ -1,0 +1,24 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+<!--
+	<localRepository>repository</localRepository>
+-->
+	<interactiveMode />
+	<offline>false</offline>
+	<pluginGroups />
+	<servers />
+	<mirrors>
+<!--
+		<mirror>
+			<id>http-enable</id>
+			<mirrorOf>dummy</mirrorOf>
+			<name>Pseudo repository to mirror external repositories initially using HTTP.</name>
+			<url>http://0.0.0.0/</url>
+		</mirror>
+-->
+	</mirrors>
+	<proxies />
+	<profiles />
+	<activeProfiles />
+</settings>
