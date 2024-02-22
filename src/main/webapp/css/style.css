@@ -57,3 +57,8 @@
 .table-xplanner > tfoot > tr > th {
 	background: var(--main-bg2-color) !important;
 }
+
+.btn-primary {
+	background-color: var(--main-bg-color);
+	border-color: var(--main-bg-color);
+}
