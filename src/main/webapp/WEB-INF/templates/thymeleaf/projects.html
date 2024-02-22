@@ -29,7 +29,6 @@
 			<thead>
 			<tr>
 				<th style="width: 15%" scope="col" th:text="#{iterations.tableheading.actions}">Actions</th>
-				<th scope="col" th:text="#{objects.tableheading.id}">ID</th>
 				<th scope="col" th:text="#{projects.tableheading.name}">Name</th>
 				<th scope="col" th:text="#{projects.tableheading.iteration}">Iteration</th>
 				<th th:if="${canViewHiddenProjects}" scope="col" th:text="#{projects.tableheading.ishidden}">Hidden</th>
@@ -62,7 +61,6 @@
 					        th:title="#{action.delete.project}">
 						<i class="bi bi-trash"></i>
 					</a>
-				<th><a th:href="@{/do/view/project(returnto=${requestURL},oid=${project.id})}" th:text="${project.id}"></a></th>
 				<td><a th:href="@{/do/view/project(returnto=${requestURL},oid=${project.id})}" th:text="${project.name}"></a></td>
 				<td>
 					<a th:if="${project.currentIteration != null}"
